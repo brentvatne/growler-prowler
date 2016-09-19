@@ -1,0 +1,19 @@
+{
+  "name": "growler-prowler",
+  "version": "0.0.0",
+  "description": "Hello Exponent!",
+  "author": "exponent.team@gmail.com",
+  "private": true,
+  "main": "main.js",
+  "dependencies": {
+    "@exponent/ex-navigation": "^1.5.29",
+    "@exponent/react-native-touchable-native-feedback-safe": "^1.0.0",
+    "@exponent/vector-icons": "^1.0.4",
+    "days": "^1.0.2",
+    "exponent": "^10.0.0",
+    "geolib": "^2.0.21",
+    "react": "~15.3.1",
+    "react-native": "github:exponentjs/react-native#sdk-10.0.1",
+    "time-js": "0.0.5"
+  }
+}
