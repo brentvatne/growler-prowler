@@ -8,6 +8,8 @@ export default function transformBrewery(brewery) {
   let openingTimeToday = hours[`${day.toLowerCase()}_open`];
   let closingTimeToday = hours[`${day.toLowerCase()}_close`];
 
+  let isOpeningLater = currentTime < openingTimeToday;
+
   let isOpen = (
     (currentTime > openingTimeToday) &&
     (currentTime < closingTimeToday || closingTimeToday === '00:00:00')
@@ -19,9 +21,13 @@ export default function transformBrewery(brewery) {
     closingTimeToday,
     openingTimeToday,
     isOpen,
+    isOpeningLater,
     hours: brewery.hours,
     name: brewery.title,
     latitude: parseFloat(brewery.latitude),
     longitude: parseFloat(brewery.longitude),
+    color: brewery.color,
+    accentColor: brewery.accentColor,
+    statusBarStyle: brewery.statusBarStyle,
   };
 }

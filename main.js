@@ -11,6 +11,7 @@ import {
 import { MaterialIcons } from '@exponent/vector-icons';
 
 import BreweryList from './components/BreweryList';
+import BreweryDetails from './components/BreweryDetails';
 
 class App extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class App extends React.Component {
       return <Exponent.Components.AppLoading />;
     }
 
+    return <BreweryDetails />;
     return <BreweryList />;
   }
 }
