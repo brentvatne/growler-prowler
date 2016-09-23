@@ -18,7 +18,7 @@ export default class BreweryListItem extends React.Component {
       address,
       closingTimeToday,
       isOpen,
-      logo,
+      smallLogo,
       name,
       distance,
       direction,
@@ -26,11 +26,11 @@ export default class BreweryListItem extends React.Component {
     } = this.props.brewery;
 
     return (
-      <TouchableNativeFeedback onPress={() => {}} style={styles.container}>
+      <TouchableNativeFeedback onPress={this.props.onPress} style={styles.container}>
         <View style={styles.logoContainer}>
           <Image
             resizeMode="contain"
-            source={{uri: logo}}
+            source={{uri: smallLogo}}
             style={styles.logo}
           />
         </View>

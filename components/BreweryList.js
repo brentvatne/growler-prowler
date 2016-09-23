@@ -15,7 +15,6 @@ import geolib from 'geolib';
 import BreweryListItem from './BreweryListItem';
 import breweries from '../data';
 
-
 export default class BreweryList extends React.Component {
   state = {
     breweries,

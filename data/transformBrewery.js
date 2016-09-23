@@ -16,18 +16,24 @@ export default function transformBrewery(brewery) {
   );
 
   return {
-    logo: brewery.logo,
+    accentColor: brewery.accentColor || '#000',
     address: brewery.address,
+    city: brewery.city,
     closingTimeToday,
-    openingTimeToday,
+    color: brewery.color || '#fff',
+    hours: brewery.hours,
     isOpen,
     isOpeningLater,
-    hours: brewery.hours,
-    name: brewery.title,
     latitude: parseFloat(brewery.latitude),
+    logo: brewery.logo,
+    smallLogo: brewery.logo_350,
     longitude: parseFloat(brewery.longitude),
-    color: brewery.color,
-    accentColor: brewery.accentColor,
+    name: brewery.title,
+    openingTimeToday,
+    postalCode: brewery.postal_code.split(' ').join('').toUpperCase(),
     statusBarStyle: brewery.statusBarStyle,
+    summary: brewery.summary,
+    description: brewery.description,
+    instagram: brewery.social_instagram,
   };
 }
