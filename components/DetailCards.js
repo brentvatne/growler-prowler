@@ -1,16 +1,21 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   InteractionManager,
   Platform,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {
   MaterialIcons,
 } from '@exponent/vector-icons';
-import ReadMore from '@exponent/react-native-read-more';
+import FadeIn from '@exponent/react-native-fade-in-image';
+import ReadMore from '@exponent/react-native-read-more-text';
+import { openImageGallery } from '@exponent/react-native-image-gallery';
 import {
   Components,
 } from 'exponent';
@@ -38,7 +43,7 @@ export class DescriptionCard extends React.Component {
         <View style={styles.card}>
           <View style={styles.cardBody}>
             <ReadMore
-              numberOfLines={3}
+              numberOfLines={6}
               renderTruncatedFooter={this._renderTruncatedFooter}
               renderRevealedFooter={this._renderRevealedFooter}>
               <RegularText style={styles.cardText}>
@@ -90,18 +95,30 @@ export class SummaryCard extends React.Component {
 
 export class InstagramPhotosCard extends React.Component {
   state = {
-    images: [],
+    images: null,
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    this._isMounted = true;
     let { profile } = this.props;
 
     if (profile) {
       let response = await fetch(`https://www.instagram.com/${profile}/media/`);
       let data = await response.json();
-      let images = data.items.map(item => item.images.standard_resolution);
-      this.setState({images});
+      if (this._isMounted) {
+        let images = data.items.map(item => ({
+          imageUrl: item.images.standard_resolution.url,
+          width: item.images.standard_resolution.width,
+          height: item.images.standard_resolution.height,
+          description: item.caption.text,
+        }));
+        this.setState({images: images.slice(0, 6)});
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -121,34 +138,69 @@ export class InstagramPhotosCard extends React.Component {
     let { images } = this.state;
 
     if (!images) {
-      return;
+      return (
+        <View style={[styles.card, styles.imageLoadingContainer]}>
+          <ActivityIndicator />
+        </View>
+      );
     }
 
     return (
       <View style={styles.card}>
-        <View style={[styles.cardBody, styles.imageContainer]}>
-          {
-            images.slice(0, 6).map(image => (
-              <Image
-                key={image.url}
-                source={{uri: image.url}}
-                style={{width: 100, height: 100, marginVertical: 5, borderRadius: 3}}
-              />
-          ))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          { images.map((image, i) => <InstagramPhoto key={i} item={image} list={images} />) }
+        </ScrollView>
       </View>
     );
+  }
+}
+
+class InstagramPhoto extends React.Component {
+
+  render() {
+    let { item } = this.props;
+
+    return (
+      <TouchableWithoutFeedback onPress={this._handlePress}>
+        <View>
+          <FadeIn>
+            <Image
+              ref={view => { this._view = view; }}
+              source={{uri: item.imageUrl}}
+              resizeMode="cover"
+              style={styles.instagramImage}
+            />
+          </FadeIn>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  _handlePress = () => {
+    let { item, list } = this.props;
+
+    this._view.measure((rx, ry, w, h, x, y) => {
+      openImageGallery({
+        animationMeasurements: {w, h, x, y},
+        list,
+        item,
+      });
+    });
   }
 }
 
 export class MapCard extends React.Component {
   state = {
     shouldRenderMap: false,
+    shouldRenderOverlay: true,
   }
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.setState({shouldRenderMap: true});
+      setTimeout(() => {
+        this.setState({shouldRenderOverlay: false});
+      }, Platform.OS === 'android' ? 700 : 0);
     });
   }
 
@@ -163,6 +215,7 @@ export class MapCard extends React.Component {
     return (
       <View style={[styles.card, styles.mapContainer]}>
         {this._maybeRenderMap()}
+        {this._maybeRenderOverlay()}
         <TouchableOpacity style={styles.cardAction}>
           <View style={styles.cardActionLabel}>
             <RegularText style={styles.cardActionText}>
@@ -180,35 +233,47 @@ export class MapCard extends React.Component {
     );
   }
 
-  _maybeRenderMap = () => {
-    if (this.state.shouldRenderMap) {
-      let {
-        name,
-        latitude,
-        longitude,
-      } = this.props.brewery;
-
-      return (
-        <MapView
-          cacheEnabled={Platform.OS === 'android'}
-          style={styles.map}
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.003,
-            longitudeDelta: 0.003,
-          }}>
-          <MapView.Marker
-            coordinate={{latitude, longitude}}
-            title={name}
-          />
-        </MapView>
-      );
-    } else {
-      return (
-        <View style={[styles.map, {backgroundColor: '#f9f5ed'}]} />
-      );
+  _maybeRenderOverlay() {
+    if (!this.state.shouldRenderOverlay) {
+      return;
     }
+
+    if (this.state.shouldRenderMap) {
+      return <View style={[styles.map, {backgroundColor: '#f9f5ed', position: 'absolute', top: 0, left: 0, right: 0}]} />
+    } else {
+      return <View style={[styles.map, {backgroundColor: '#f9f5ed'}]} />
+    }
+  }
+
+  _maybeRenderMap() {
+    if (!this.state.shouldRenderMap) {
+      return;
+    }
+
+    let {
+      name,
+      latitude,
+      longitude,
+    } = this.props.brewery;
+
+    return (
+      <MapView
+        cacheEnabled={Platform.OS === 'android'}
+        style={styles.map}
+        loadingBackgroundColor="#f9f5ed"
+        loadingEnabled={false}
+        initialRegion={{
+          latitude,
+          longitude,
+          latitudeDelta: 0.003,
+          longitudeDelta: 0.003,
+        }}>
+        <MapView.Marker
+          coordinate={{latitude, longitude}}
+          title={name}
+        />
+      </MapView>
+    );
   }
 }
 
@@ -260,11 +325,21 @@ const styles = StyleSheet.create({
   mapContainer: {
     marginTop: 15,
   },
-  imageContainer: {
+  imageLoadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    height: 125,
+    marginVertical: 10,
+  },
+  instagramImage: {
+    width: 125,
+    height: 125,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderRadius: 3,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#eee',
   },
   summaryContainer: {
     marginTop: 15,

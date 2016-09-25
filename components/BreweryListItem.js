@@ -1,10 +1,12 @@
 import React from 'react';
 import {
-  View,
   Image,
-  Text,
+  Platform,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
+import FadeIn from '@exponent/react-native-fade-in-image';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import { MaterialIcons } from '@exponent/vector-icons';
 
@@ -15,24 +17,20 @@ import formatTime from '../util/formatTime';
 export default class BreweryListItem extends React.Component {
   render() {
     let {
-      address,
-      closingTimeToday,
-      isOpen,
       smallLogo,
       name,
-      distance,
-      direction,
-      openingTimeToday,
     } = this.props.brewery;
 
     return (
       <TouchableNativeFeedback onPress={this.props.onPress} style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image
-            resizeMode="contain"
-            source={{uri: smallLogo}}
-            style={styles.logo}
-          />
+          <FadeIn placeholderStyle={{backgroundColor: Platform.OS === 'android' ? 'transparent' : '#eee'}}>
+            <Image
+              resizeMode="contain"
+              source={{uri: smallLogo}}
+              style={styles.logo}
+            />
+          </FadeIn>
         </View>
 
         <View style={styles.infoContainer}>
@@ -41,11 +39,11 @@ export default class BreweryListItem extends React.Component {
           </RegularText>
 
           <RegularText style={styles.hours}>
-            {formatTime(openingTimeToday)} - {formatTime(closingTimeToday)} ({isOpen ? 'Open' : 'Closed'})
+            {this._renderHoursText()}
           </RegularText>
 
           <RegularText style={styles.address}>
-            {distance ? `${distance} ${direction.exact} - ` : ''} {address}
+            {this._renderAddressText()}
           </RegularText>
         </View>
 
@@ -55,15 +53,46 @@ export default class BreweryListItem extends React.Component {
       </TouchableNativeFeedback>
     );
   }
+
+  _renderHoursText() {
+    let {
+      isOpen,
+      openingTimeToday,
+      closingTimeToday,
+    } = this.props.brewery;
+
+    if (openingTimeToday && closingTimeToday) {
+      return `${formatTime(openingTimeToday)} - ${formatTime(closingTimeToday)} (${isOpen ? 'Open' : 'Closed'})`
+    } else {
+      return 'Hours not available';
+    }
+  }
+
+  _renderAddressText() {
+    let {
+      address,
+      distance,
+      direction,
+    } = this.props.brewery;
+
+    let addressText = address;
+
+    if (distance) {
+      addressText = `${distance} ${direction.exact} - ${addressText}`
+    }
+
+    return addressText;
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     borderBottomColor: '#e5e5e5',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: Platform.OS === 'android' ? 1 : StyleSheet.hairlineWidth,
     width: Layout.window.width,
   },
   infoContainer: {

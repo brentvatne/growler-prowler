@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
+import ImageGallery from '@exponent/react-native-image-gallery';
 
 import BreweryListScreen from './components/BreweryListScreen';
 import BreweryDetailsScreen from './components/BreweryDetailsScreen';
@@ -51,9 +52,20 @@ class App extends React.Component {
     }
 
     return (
-      <NavigationProvider router={Router}>
-        <StackNavigation initialRoute={Router.getRoute('list')} />
-      </NavigationProvider>
+      <View style={styles.container}>
+        <NavigationProvider router={Router}>
+          <StackNavigation
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#fff',
+              }
+            }}
+            initialRoute={Router.getRoute('list')}
+          />
+        </NavigationProvider>
+
+        <ImageGallery />
+      </View>
     );
   }
 }

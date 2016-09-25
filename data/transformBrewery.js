@@ -13,6 +13,9 @@ export default function transformBrewery(brewery) {
   let isOpen = (
     (currentTime > openingTimeToday) &&
     (currentTime < closingTimeToday || closingTimeToday === '00:00:00')
+  ) || (
+    (closingTimeToday < openingTimeToday) &&
+    (currentTime > openingTimeToday)
   );
 
   return {
