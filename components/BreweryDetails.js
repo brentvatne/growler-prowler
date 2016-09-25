@@ -12,6 +12,9 @@ import {
 } from '@exponent/vector-icons';
 import Exponent from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import {
+  NavigationBar
+} from '@exponent/ex-navigation';
 
 import {
   BoldText,
@@ -26,14 +29,7 @@ import {
 import formatTime from '../util/formatTime';
 import Layout from '../constants/Layout';
 
-import breweries from '../data';
-const brassneck = breweries[1];
-
 export default class BreweryDetails extends React.Component {
-
-  static defaultProps = {
-    brewery: brassneck,
-  }
 
   state = {
     scrollY: new Animated.Value(0),
@@ -107,14 +103,11 @@ export default class BreweryDetails extends React.Component {
 
     return (
       <Animated.View style={[styles.navigationBar, {backgroundColor: color}]}>
-        <View style={styles.navigationBarAction}>
-          <TouchableNativeFeedback>
-            <MaterialIcons
-              name="arrow-back"
-              size={25}
-              color={accentColor}
-            />
-          </TouchableNativeFeedback>
+        <View style={[styles.navigationBarAction, {marginLeft: -5}]}>
+          <NavigationBar.BackButton
+            tintColor={accentColor}
+            onPress={() => this.props.navigator.pop() }
+          />
         </View>
 
         <View style={styles.navigationBarTitle}>

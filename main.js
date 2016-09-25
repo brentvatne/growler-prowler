@@ -10,8 +10,18 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
 
-import BreweryList from './components/BreweryList';
-import BreweryDetails from './components/BreweryDetails';
+import BreweryListScreen from './components/BreweryListScreen';
+import BreweryDetailsScreen from './components/BreweryDetailsScreen';
+import {
+  NavigationProvider,
+  StackNavigation,
+  createRouter,
+} from '@exponent/ex-navigation';
+
+const Router = createRouter(() => ({
+  list: () => BreweryListScreen,
+  details: () => BreweryDetailsScreen,
+}));
 
 class App extends React.Component {
   state = {
@@ -40,8 +50,11 @@ class App extends React.Component {
       return <Exponent.Components.AppLoading />;
     }
 
-    return <BreweryDetails />;
-    return <BreweryList />;
+    return (
+      <NavigationProvider router={Router}>
+        <StackNavigation initialRoute={Router.getRoute('list')} />
+      </NavigationProvider>
+    );
   }
 }
 

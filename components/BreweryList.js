@@ -64,6 +64,7 @@ export default class BreweryList extends React.Component {
         {
           this.state.breweries.map(brewery => (
             <BreweryListItem
+              onPress={() => this._handlePressBrewery(brewery)}
               brewery={brewery}
               key={brewery.name}
             />
@@ -73,6 +74,10 @@ export default class BreweryList extends React.Component {
         <StatusBar barStyle="default" />
       </ScrollView>
     );
+  }
+
+  _handlePressBrewery = (brewery) => {
+    this.props.navigator.push('details', {brewery});
   }
 }
 
