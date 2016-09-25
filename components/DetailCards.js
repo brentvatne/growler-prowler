@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Platform,
   Image,
+  InteractionManager,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -141,11 +142,19 @@ export class InstagramPhotosCard extends React.Component {
 }
 
 export class MapCard extends React.Component {
+  state = {
+    shouldRenderMap: false,
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({shouldRenderMap: true});
+    });
+  }
+
   render() {
     let {
       address,
-      latitude,
-      longitude,
       city,
       postalCode,
       name,
@@ -153,20 +162,7 @@ export class MapCard extends React.Component {
 
     return (
       <View style={[styles.card, styles.mapContainer]}>
-        <MapView
-          cacheEnabled={Platform.OS === 'android'}
-          style={{height: 150, width: Layout.window.width, backgroundColor: '#fff'}}
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.003,
-            longitudeDelta: 0.003,
-          }}>
-          <MapView.Marker
-            coordinate={{latitude, longitude}}
-            title={name}
-          />
-        </MapView>
+        {this._maybeRenderMap()}
         <TouchableOpacity style={styles.cardAction}>
           <View style={styles.cardActionLabel}>
             <RegularText style={styles.cardActionText}>
@@ -183,9 +179,44 @@ export class MapCard extends React.Component {
       </View>
     );
   }
+
+  _maybeRenderMap = () => {
+    if (this.state.shouldRenderMap) {
+      let {
+        name,
+        latitude,
+        longitude,
+      } = this.props.brewery;
+
+      return (
+        <MapView
+          cacheEnabled={Platform.OS === 'android'}
+          style={styles.map}
+          initialRegion={{
+            latitude,
+            longitude,
+            latitudeDelta: 0.003,
+            longitudeDelta: 0.003,
+          }}>
+          <MapView.Marker
+            coordinate={{latitude, longitude}}
+            title={name}
+          />
+        </MapView>
+      );
+    } else {
+      return (
+        <View style={[styles.map, {backgroundColor: '#f9f5ed'}]} />
+      );
+    }
+  }
 }
 
 const styles = StyleSheet.create({
+  map: {
+    height: 150,
+    width: Layout.window.width,
+  },
   card: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#E8E8E8',
