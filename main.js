@@ -1,4 +1,5 @@
 import Exponent, {
+  Asset,
   Font,
 } from 'exponent';
 import React from 'react';
@@ -10,18 +11,20 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
 import ImageGallery from '@exponent/react-native-image-gallery';
-
-import BreweryListScreen from './components/BreweryListScreen';
-import BreweryDetailsScreen from './components/BreweryDetailsScreen';
 import {
   NavigationProvider,
   StackNavigation,
   createRouter,
 } from '@exponent/ex-navigation';
 
+import AuthenticationScreen from './components/AuthenticationScreen';
+import BreweryDetailsScreen from './components/BreweryDetailsScreen';
+import BreweryListScreen from './components/BreweryListScreen';
+
 const Router = createRouter(() => ({
   list: () => BreweryListScreen,
   details: () => BreweryDetailsScreen,
+  authentication: () => AuthenticationScreen,
 }));
 
 class App extends React.Component {
@@ -60,7 +63,7 @@ class App extends React.Component {
                 backgroundColor: '#fff',
               }
             }}
-            initialRoute={Router.getRoute('list')}
+            initialRoute={Router.getRoute('authentication')}
           />
         </NavigationProvider>
 

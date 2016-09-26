@@ -4,6 +4,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } from 'react-native';
 import FadeIn from '@exponent/react-native-fade-in-image';
@@ -22,7 +23,11 @@ export default class BreweryListItem extends React.Component {
     } = this.props.brewery;
 
     return (
-      <TouchableNativeFeedback onPress={this.props.onPress} style={styles.container}>
+      <TouchableNativeFeedback
+        onPress={this.props.onPress}
+        style={styles.container}
+        fallback={TouchableHighlight}
+        underlayColor="#ccc">
         <View style={styles.logoContainer}>
           <FadeIn placeholderStyle={{backgroundColor: Platform.OS === 'android' ? 'transparent' : '#eee'}}>
             <Image
