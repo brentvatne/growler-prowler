@@ -10,6 +10,7 @@ import Actions from './state/Actions';
 import LocalStorage from './state/LocalStorage';
 import Router from './navigation/Router';
 import Store from './state/Store';
+import breweries from './data';
 
 class AppContainer extends React.Component {
   render() {
@@ -75,6 +76,7 @@ class App extends React.Component {
   _loadCacheAsync = async () => {
     let user = await LocalStorage.getUserAsync();
     this.props.dispatch(Actions.setCurrentUser(user));
+    this.props.dispatch(Actions.setBreweries(breweries));
 
     this.setState({
       dataReady: true,

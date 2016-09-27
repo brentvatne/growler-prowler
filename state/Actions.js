@@ -20,4 +20,18 @@ export default class Actions {
       type: ActionTypes.SIGN_OUT,
     }
   }
+
+  static setBreweries(breweries) {
+    return {
+      type: ActionTypes.SET_BREWERIES,
+      breweries,
+    }
+  }
+
+  static setNearbyBreweries(breweries) {
+    return {
+      type: ActionTypes.SET_NEARBY_BREWERIES,
+      breweries,
+    }
+  }
 }
