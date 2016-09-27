@@ -4,9 +4,9 @@ import { StyleSheet, View } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
 import { NavigationProvider, StackNavigation, withNavigation } from '@exponent/ex-navigation';
 import { Provider as ReduxProvider, connect } from 'react-redux';
-import ImageGalleryPortal from '@exponent/react-native-image-gallery';
 
 import Actions from './state/Actions';
+import ImageGalleryPortal from './components/ImageGalleryPortal';
 import LocalStorage from './state/LocalStorage';
 import Router from './navigation/Router';
 import Store from './state/Store';
