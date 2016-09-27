@@ -5,12 +5,15 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Facebook } from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
+import Actions from '../state/Actions';
 import Layout from '../constants/Layout';
 import { RegularText } from './StyledText';
 
+@connect()
 export default class AuthenticationScreen extends React.Component {
   static route = {
     navigationBar: {
@@ -49,17 +52,18 @@ export default class AuthenticationScreen extends React.Component {
     if (result.type === 'success') {
       let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}`);
       let info = await response.json();
-      console.log({info});
 
-      this.props.navigator.replace('list');
-      requestAnimationFrame(() => {
-        Alert.alert('Logged in!', `Hi ${info.name}!`);
-      });
+      this.props.dispatch(Actions.signIn({
+        id: info.id,
+        authToken: result.token,
+        name: info.name,
+        isGuest: false,
+      }));
     }
   }
 
   _continueAsGuest = () => {
-    this.props.navigator.replace('list');
+    this.props.dispatch(Actions.signIn({isGuest: true}));
   }
 }
 

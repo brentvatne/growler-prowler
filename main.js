@@ -1,39 +1,62 @@
-import Exponent, {
-  Asset,
-  Font,
-} from 'exponent';
+import Exponent, { Font } from 'exponent';
 import React from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
-import ImageGallery from '@exponent/react-native-image-gallery';
-import {
-  NavigationProvider,
-  StackNavigation,
-  createRouter,
-} from '@exponent/ex-navigation';
+import { NavigationProvider, StackNavigation, withNavigation } from '@exponent/ex-navigation';
+import { Provider as ReduxProvider, connect } from 'react-redux';
+import ImageGalleryPortal from '@exponent/react-native-image-gallery';
 
-import AuthenticationScreen from './components/AuthenticationScreen';
-import BreweryDetailsScreen from './components/BreweryDetailsScreen';
-import BreweryListScreen from './components/BreweryListScreen';
+import Actions from './state/Actions';
+import LocalStorage from './state/LocalStorage';
+import Router from './navigation/Router';
+import Store from './state/Store';
 
-const Router = createRouter(() => ({
-  list: () => BreweryListScreen,
-  details: () => BreweryDetailsScreen,
-  authentication: () => AuthenticationScreen,
-}));
+class AppContainer extends React.Component {
+  render() {
+    return (
+      <ReduxProvider store={Store}>
+        <NavigationProvider router={Router}>
+          <App {...this.props} />
+        </NavigationProvider>
+      </ReduxProvider>
+    );
+  }
+}
 
+@withNavigation
+@connect(data => App.getDataProps)
 class App extends React.Component {
+  static getDataProps(data) {
+    return {
+      currentUser: data.currentUser,
+    }
+  }
+
   state = {
-    appIsReady: false,
+    assetsReady: false,
+    dataReady: false,
   };
 
-  componentWillMount() {
-    this._loadAssetsAsync();
+  async componentDidMount() {
+    await this._loadAssetsAsync();
+    await this._loadCacheAsync();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.state.assetsReady || !this.state.dataReady) {
+      return;
+    }
+
+    const rootNavigator = this.props.navigation.getNavigator('root');
+    const previouslySignedIn = isSignedIn(prevProps.currentUser) &&
+      prevState.dataReady === this.state.dataReady;
+    const currentlySignedIn = isSignedIn(this.props.currentUser);
+
+    if (!previouslySignedIn && currentlySignedIn) {
+      rootNavigator.replace('list');
+    } else if (previouslySignedIn && !currentlySignedIn) {
+      rootNavigator.replace('authentication');
+    }
   }
 
   _loadAssetsAsync = async () => {
@@ -45,32 +68,40 @@ class App extends React.Component {
     });
 
     this.setState({
-      appIsReady: true,
+      assetsReady: true,
+    });
+  }
+
+  _loadCacheAsync = async () => {
+    let user = await LocalStorage.getUserAsync();
+    this.props.dispatch(Actions.setCurrentUser(user));
+
+    this.setState({
+      dataReady: true,
     });
   }
 
   render() {
-    if (!this.state.appIsReady) {
+    if (!this.state.assetsReady || !this.state.dataReady) {
       return <Exponent.Components.AppLoading />;
     }
 
     return (
       <View style={styles.container}>
-        <NavigationProvider router={Router}>
-          <StackNavigation
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: '#fff',
-              }
-            }}
-            initialRoute={Router.getRoute('authentication')}
-          />
-        </NavigationProvider>
+        <StackNavigation
+          id="root"
+          defaultRouteConfig={{navigationBar: { backgroundColor: '#fff'}}}
+          initialRoute={Router.getRoute('authentication')}
+        />
 
-        <ImageGallery />
+        <ImageGalleryPortal />
       </View>
     );
   }
+}
+
+function isSignedIn(userState) {
+  return !!userState.authToken || userState.isGuest;
 }
 
 const styles = StyleSheet.create({
@@ -79,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-Exponent.registerRootComponent(App);
+Exponent.registerRootComponent(AppContainer);

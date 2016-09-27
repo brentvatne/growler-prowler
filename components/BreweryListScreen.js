@@ -13,9 +13,16 @@ import {
 import {
   Constants,
 } from 'exponent';
+import {
+  MaterialIcons,
+} from '@exponent/vector-icons';
+import { connect } from 'react-redux';
+import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
+import Actions from '../state/Actions';
 import BreweryList from './BreweryList';
 
+@connect()
 export default class BreweryListScreen extends React.Component {
   static route = {
     navigationBar: {
@@ -40,8 +47,18 @@ export default class BreweryListScreen extends React.Component {
             All Breweries
           </BoldText>
         </View>
+
+        <View style={styles.navigationBarLeftButton}>
+          <TouchableNativeFeedback onPress={this._handlePressSignOut}>
+            <MaterialIcons name="exit-to-app" size={25} style={{transform: [{rotate: '180deg'}]}} />
+          </TouchableNativeFeedback>
+        </View>
       </View>
     );
+  }
+
+  _handlePressSignOut = () => {
+    this.props.dispatch(Actions.signOut());
   }
 }
 
@@ -66,9 +83,19 @@ const styles = StyleSheet.create({
     alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
     paddingHorizontal: 20,
     justifyContent: 'center',
+    // Remove this paddingLeft conditional when we get rid of the button
+    paddingLeft: Platform.OS === 'ios' ? 20 : 20 + 40,
   },
   navigationBarTitle: {
     fontSize: 17,
     letterSpacing: -0.5,
+  },
+  navigationBarLeftButton: {
+    position: 'absolute',
+    top: 0,
+    left: 15,
+    bottom: 0,
+    top: Constants.statusBarHeight,
+    justifyContent: 'center',
   },
 });
