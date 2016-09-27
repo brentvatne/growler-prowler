@@ -10,15 +10,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {
-  MaterialIcons,
-} from '@exponent/vector-icons';
 import FadeIn from '@exponent/react-native-fade-in-image';
 import ReadMore from '@exponent/react-native-read-more-text';
+import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import { Components } from 'exponent';
 import { openImageGallery } from '@exponent/react-native-image-gallery';
-import {
-  Components,
-} from 'exponent';
+import { MaterialIcons } from '@exponent/vector-icons';
 const { MapView } = Components;
 
 import {
@@ -216,19 +213,21 @@ export class MapCard extends React.Component {
       <View style={[styles.card, styles.mapContainer]}>
         {this._maybeRenderMap()}
         {this._maybeRenderOverlay()}
-        <TouchableOpacity style={styles.cardAction}>
-          <View style={styles.cardActionLabel}>
-            <RegularText style={styles.cardActionText}>
-              {address}, {postalCode}
-            </RegularText>
+        <TouchableNativeFeedback onPress={this.props.onPress}>
+          <View style={styles.cardAction}>
+            <View style={styles.cardActionLabel}>
+              <RegularText style={styles.cardActionText}>
+                {address}, {postalCode}
+              </RegularText>
 
-            <RegularText style={styles.cardActionSubtitleText}>
-              {city}
-            </RegularText>
+              <RegularText style={styles.cardActionSubtitleText}>
+                {city}
+              </RegularText>
+            </View>
+
+            <MaterialIcons name="chevron-right" size={30} color="#b8c3c9" />
           </View>
-
-          <MaterialIcons name="chevron-right" size={30} color="#b8c3c9" />
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       </View>
     );
   }

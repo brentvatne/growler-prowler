@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Animated,
   Image,
+  Linking,
+  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -94,7 +96,7 @@ export default class BreweryDetails extends React.Component {
             <View style={styles.heroSpacer} />
 
             <View style={styles.contentContainerStyle}>
-              <MapCard brewery={brewery} />
+              <MapCard brewery={brewery} onPress={this._handlePressDirections} />
               <SummaryCard text={brewery.summary} />
               <DescriptionCard text={brewery.description} />
               <InstagramPhotosCard profile={brewery.instagram} />
@@ -134,7 +136,7 @@ export default class BreweryDetails extends React.Component {
         </View>
 
         <View style={styles.navigationBarAction}>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this._handlePressDirections}>
             <MaterialIcons
               name="directions"
               size={25}
@@ -227,6 +229,22 @@ export default class BreweryDetails extends React.Component {
         </Animated.View>
       </View>
     );
+  }
+
+  _handlePressDirections = () => {
+    let {
+      address,
+      postalCode,
+      city,
+    } = this.props.brewery;
+
+    let daddr = encodeURIComponent(`${address} ${postalCode}, ${city}`);
+
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+    } else {
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+    }
   }
 }
 
