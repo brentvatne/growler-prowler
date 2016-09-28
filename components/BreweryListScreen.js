@@ -31,6 +31,8 @@ import Layout from '../constants/Layout';
 const MenuOptions = [
   'All',
   'Nearby',
+  'Visited',
+  'Unvisited'
 ];
 
 @connect()
@@ -58,6 +60,9 @@ export default class BreweryListScreen extends React.Component {
       <View style={styles.container}>
         {selectedOption === 'All' && <BreweryList key="list" />}
         {selectedOption === 'Nearby' && <BreweryList key="list" nearby />}
+        {selectedOption === 'Visited' && <BreweryList key="list" visited />}
+        {selectedOption === 'Unvisited' && <BreweryList key="list" notVisited />}
+
         {this._renderMenuOverlay()}
         {this._renderMenu()}
         {this._renderNavigationBar()}

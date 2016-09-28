@@ -11,16 +11,27 @@ import { withNavigation } from '@exponent/ex-navigation';
 
 import BreweryListItem from './BreweryListItem';
 
+function breweriesFromIds(all, ids) {
+  return ids.map(id => all.find(brewery => brewery.id === id));
+}
+
 @withNavigation
 @connect((data, props) => BreweryList.getDataProps(data, props))
 export default class BreweryList extends React.Component {
   static getDataProps(data, props) {
-    let breweries;
+    let { breweries } = data;
+    let { all, nearby, visited } = breweries;
 
     if (props.nearby) {
-      breweries = data.breweries.nearby;
+      breweries = breweriesFromIds(all, nearby);
+    } else if (props.visited) {
+      breweries = breweriesFromIds(all, visited);
+    } else if (props.notVisited) {
+      let allBreweryIds = all.map(brewery => brewery.id);
+      let notVisited = allBreweryIds.filter(id => !visited.includes(id));
+      breweries = breweriesFromIds(all, notVisited);
     } else {
-      breweries = data.breweries.all;
+      breweries = all;
     }
 
     return {
@@ -51,7 +62,7 @@ export default class BreweryList extends React.Component {
   }
 
   _handlePressBrewery = (brewery) => {
-    this.props.navigator.push('details', {brewery});
+    this.props.navigator.push('details', {breweryId: brewery.id});
   }
 }
 

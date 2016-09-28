@@ -2,7 +2,7 @@ import transformBrewery from './transformBrewery';
 
 const breweries = [
   {
-    "status":1,
+    "id": 1,
     "type":"brewery",
     "title":"Main Street Brewing",
     "color": "#fff",
@@ -65,7 +65,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 2,
     "type":"brewery",
     "title":"Brassneck Brewery",
     "address":"2148 Main St",
@@ -128,7 +128,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 3,
     "type":"brewery",
     "title":"33 Acres",
     "address":"15 W 8th Ave",
@@ -189,7 +189,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 4,
     "type":"brewery",
     "title":"R & B Brewing",
     "address":"54 E 4th Ave",
@@ -250,7 +250,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 5,
     "type":"brewery",
     "title":"Red Truck Beer",
     "address":"295 East 1st Ave",
@@ -311,7 +311,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 6,
     "type":"brewery",
     "title":"Faculty Brewing Co.",
     "color": "#3eb768",
@@ -374,7 +374,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 7,
     "type":"brewery",
     "title":"Big Rock Urban Brewery",
     "color": "#ea3429",
@@ -437,7 +437,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 8,
     "type":"brewery",
     "title":"Strange Fellows",
     "address":"1345 Clark Drive",
@@ -500,7 +500,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 9,
     "type":"brewery",
     "title":"Central City Brewers - Beatty Street",
     "address":"871 Beatty Street",
@@ -563,7 +563,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 10,
     "type":"brewery",
     "title":"MJG Yaletown",
     "address":"1111 Mainland St",
@@ -626,7 +626,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 11,
     "type":"brewery",
     "title":"Off The Rail Brewing",
     "address":"1351 Adanac Bikeway",
@@ -687,7 +687,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 12,
     "type":"brewery",
     "title":"Bomber Brewing",
     "address":"1488 Adanac St",
@@ -747,7 +747,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 13,
     "type":"brewery",
     "title":"Postmark Brewing",
     "address":"55 Dunlevy Ave",
@@ -807,7 +807,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 14,
     "type":"brewery",
     "title":"Steamworks Brew Pub",
     "address":"375 Water St",
@@ -867,7 +867,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 15,
     "type":"brewery",
     "title":"Callister Brewing Co.",
     "address":"1338 Franklin Street",
@@ -927,7 +927,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 16,
     "type":"brewery",
     "title":"Granville Island Brewing",
     "address":"1441 Cartwright St",
@@ -987,7 +987,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 17,
     "type":"brewery",
     "title":"Powell Street Craft Brewing",
     "address":"1357 Powell St",
@@ -1047,7 +1047,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 18,
     "type":"brewery",
     "title":"Storm Brewing",
     "address":"310 Commercial Dr",
@@ -1107,7 +1107,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 19,
     "type":"brewery",
     "title":"Doan's Craft Brewing",
     "address":"1830 Powell St",
@@ -1167,7 +1167,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 20,
     "type":"brewery",
     "title":"Parallel 49 Brewing",
     "address":"1946 Triumph St",
@@ -1227,7 +1227,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 21,
     "type":"brewery",
     "title":"Coal Harbour Brewing",
     "address":"1967 Triumph St",
@@ -1287,7 +1287,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 22,
     "type":"brewery",
     "title":"Green Leaf Brewing",
     "address":"123 Carrie Cates Ct",
@@ -1349,7 +1349,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 23,
     "type":"brewery",
     "title":"Dogwood Brewing",
     "address":"8284 Sherbrooke St",
@@ -1411,7 +1411,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "status":1,
+    "id": 24,
     "type":"brewery",
     "title":"Steamworks Brewery",
     "address":"3845 William Street",
@@ -1471,8 +1471,7 @@ const breweries = [
     "rating":"?"
   },
   {
-    "id":16,
-    "status":1,
+    "id": 25,
     "type":"brewery",
     "title":"Black Kettle Brewing",
     "address":"720 Copping Street",
@@ -1506,9 +1505,7 @@ const breweries = [
     "banner_thumb":"http://storage.growlerfill.ca/162/conversions/thumb.png",
     "banner_medium":"http://storage.growlerfill.ca/162/conversions/medium.png",
     "hours":{
-      "id":16,
       "timezone":"America/Vancouver",
-      "brewery_id":16,
       "monday_open":"11:00:00",
       "monday_close":"19:00:00",
       "tuesday_open":"11:00:00",

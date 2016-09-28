@@ -2,25 +2,39 @@ import { AsyncStorage } from 'react-native';
 
 const Keys = {
   User: 'GrowlerUser',
+  VisitedBreweries: 'GrowlerVisited',
 };
 
 async function getUserAsync() {
   let results = await AsyncStorage.getItem(Keys.User);
 
   try {
-    let user = JSON.parse(results);
-    return user;
+    return JSON.parse(results);
   } catch(e) {
     return null;
   }
 }
 
-function saveUserAsync(user: Object) {
+function saveUserAsync(user) {
   return AsyncStorage.setItem(Keys.User, JSON.stringify(user));
 }
 
 function removeUserAsync() {
   return AsyncStorage.removeItem(Keys.User);
+}
+
+function saveVisitedBreweriesAsync(breweryIds) {
+  return AsyncStorage.setItem(Keys.VisitedBreweries, JSON.stringify(breweryIds));
+}
+
+async function getVisitedBreweriesAsync() {
+  let results = await AsyncStorage.getItem(Keys.VisitedBreweries);
+
+  try {
+    return JSON.parse(results);
+  } catch(e) {
+    return null;
+  }
 }
 
 function clearAllAsync() {
@@ -31,5 +45,7 @@ export default {
   saveUserAsync,
   getUserAsync,
   removeUserAsync,
+  saveVisitedBreweriesAsync,
+  getVisitedBreweriesAsync,
   clearAllAsync,
 };

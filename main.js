@@ -78,8 +78,10 @@ class App extends React.Component {
   _loadCacheAsync = async () => {
     let user = new User(await LocalStorage.getUserAsync());
     let breweries = new List(AllBreweries.map(data => new Brewery(data)));
+    let visitedBreweries = new List(await LocalStorage.getVisitedBreweriesAsync());
     this.props.dispatch(Actions.setCurrentUser(user));
     this.props.dispatch(Actions.setBreweries(breweries));
+    this.props.dispatch(Actions.setVisitedBreweries(visitedBreweries));
 
     this.setState({
       dataReady: true,

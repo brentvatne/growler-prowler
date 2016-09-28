@@ -7,6 +7,7 @@ export const BreweriesState = Record({
 });
 
 export const Brewery = Record({
+  id: '',
   accentColor: '#000',
   address: '',
   city: '',

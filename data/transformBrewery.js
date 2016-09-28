@@ -26,6 +26,7 @@ export default function transformBrewery(brewery) {
     color: brewery.color || '#fff',
     description: brewery.description,
     hours: brewery.hours,
+    id: brewery.id,
     instagram: brewery.social_instagram,
     isOpen,
     isOpeningLater,

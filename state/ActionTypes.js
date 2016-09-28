@@ -3,8 +3,12 @@ export default defineActionConstants([
   'SIGN_IN',
   'SIGN_OUT',
   'SET_BREWERIES',
-  'SET_NEARBY_BREWERIES',
   'COMPUTE_DISTANCES',
+  'SET_NEARBY_BREWERIES',
+  'SET_VISITED_BREWERIES',
+  'ADD_VISITED_BREWERY',
+  'REMOVE_VISITED_BREWERY',
+  'TOGGLE_VISITED_BREWERY',
 ]);
 
 function defineActionConstants(names) {

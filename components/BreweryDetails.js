@@ -29,6 +29,7 @@ import {
   DescriptionCard,
   SummaryCard,
   InstagramPhotosCard,
+  VisitedCard,
 } from './DetailCards';
 import formatTime from '../util/formatTime';
 import Layout from '../constants/Layout';
@@ -61,6 +62,7 @@ export default class BreweryDetails extends React.Component {
               <SummaryCard text={brewery.summary} />
               <DescriptionCard text={brewery.description} />
               <InstagramPhotosCard profile={brewery.instagram} />
+              <VisitedCard breweryId={this.props.brewery.id} />
             </View>
           </Animated.ScrollView>
         </View>
@@ -278,7 +280,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
   contentContainerStyle: {
-    paddingBottom: 30,
+    paddingBottom: 20,
     backgroundColor: '#FAFAFA',
     minHeight: Layout.window.height - HeroHeight,
   },

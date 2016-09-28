@@ -6,10 +6,12 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 import FadeIn from '@exponent/react-native-fade-in-image';
 import ReadMore from '@exponent/react-native-read-more-text';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
@@ -18,6 +20,7 @@ import { openImageGallery } from '@exponent/react-native-image-gallery';
 import { MaterialIcons } from '@exponent/vector-icons';
 const { MapView } = Components;
 
+import Actions from '../state/Actions';
 import {
   RegularText,
   BoldText,
@@ -276,6 +279,60 @@ export class MapCard extends React.Component {
   }
 }
 
+@connect((data, props) => VisitedCard.getDataProps(data, props))
+export class VisitedCard extends React.Component {
+  static getDataProps(data, props) {
+    let { breweryId } = props;
+    let isVisited = data.breweries.visited.includes(breweryId);
+
+    return {
+      isVisited,
+    }
+  }
+
+  _onToggleVisited = () => {
+    if (this.props.isVisited) {
+      this.props.dispatch(Actions.removeVisitedBrewery(this.props.breweryId));
+    } else {
+      this.props.dispatch(Actions.addVisitedBrewery(this.props.breweryId));
+    }
+  }
+
+  render() {
+    let {
+      isVisited,
+    } = this.props;
+
+    return (
+      <View>
+        <View style={styles.cardLabel}>
+          <BoldText style={styles.cardLabelText}>
+            Been here before?
+          </BoldText>
+        </View>
+
+        <View style={styles.card}>
+          <TouchableNativeFeedback
+            onPress={this._onToggleVisited}
+            fallback={TouchableHighlight}
+            underlayColor="#eee">
+            <View style={[styles.cardBody, styles.visitedCardBody]}>
+                <MaterialIcons
+                  name={isVisited ? "check-box" : "check-box-outline-blank"}
+                  size={25}
+                  style={{opacity: isVisited ? 1 : 0.5}}
+                />
+              <RegularText style={[styles.visitedCardText, {opacity: isVisited ? 1 : 0.7}]}>
+                { isVisited ? "You've been here" : "You still need to check this one out" }
+              </RegularText>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   map: {
     height: 150,
@@ -291,7 +348,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   cardLabel: {
-    marginTop: 25,
+    marginTop: 20,
     paddingLeft: 8,
     paddingBottom: 5,
   },
@@ -342,5 +399,15 @@ const styles = StyleSheet.create({
   },
   summaryContainer: {
     marginTop: 15,
+  },
+  visitedCardBody: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 9,
+  },
+  visitedCardText: {
+    color: '#888',
+    marginLeft: 5,
+    marginBottom: 1,
   },
 });

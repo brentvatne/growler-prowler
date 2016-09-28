@@ -28,10 +28,38 @@ export default class Actions {
     }
   }
 
-  static setNearbyBreweries(breweries) {
+  static setNearbyBreweries(breweryIds) {
     return {
       type: ActionTypes.SET_NEARBY_BREWERIES,
-      breweries,
+      breweryIds,
+    }
+  }
+
+  static setVisitedBreweries(breweryIds) {
+    return {
+      type: ActionTypes.SET_VISITED_BREWERIES,
+      breweryIds,
+    }
+  }
+
+  static toggleVisitedBrewery(breweryId) {
+    return {
+      type: ActionTypes.TOGGLE_VISITED_BREWERY,
+      breweryId,
+    }
+  }
+
+  static addVisitedBrewery(breweryId) {
+    return {
+      type: ActionTypes.ADD_VISITED_BREWERY,
+      breweryId,
+    }
+  }
+
+  static removeVisitedBrewery(breweryId) {
+    return {
+      type: ActionTypes.REMOVE_VISITED_BREWERY,
+      breweryId,
     }
   }
 
