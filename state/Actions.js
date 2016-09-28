@@ -34,4 +34,10 @@ export default class Actions {
       breweries,
     }
   }
+
+  static computeDistances() {
+    return {
+      type: ActionTypes.COMPUTE_DISTANCES,
+    }
+  }
 }

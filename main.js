@@ -4,13 +4,15 @@ import { StyleSheet, View } from 'react-native';
 import { MaterialIcons } from '@exponent/vector-icons';
 import { NavigationProvider, StackNavigation, withNavigation } from '@exponent/ex-navigation';
 import { Provider as ReduxProvider, connect } from 'react-redux';
+import { List } from 'immutable';
 
 import Actions from './state/Actions';
 import ImageGalleryPortal from './components/ImageGalleryPortal';
 import LocalStorage from './state/LocalStorage';
 import Router from './navigation/Router';
 import Store from './state/Store';
-import breweries from './data';
+import { Brewery, User } from './state/Records';
+import AllBreweries from './data';
 
 class AppContainer extends React.Component {
   render() {
@@ -74,7 +76,8 @@ class App extends React.Component {
   }
 
   _loadCacheAsync = async () => {
-    let user = await LocalStorage.getUserAsync();
+    let user = new User(await LocalStorage.getUserAsync());
+    let breweries = new List(AllBreweries.map(data => new Brewery(data)));
     this.props.dispatch(Actions.setCurrentUser(user));
     this.props.dispatch(Actions.setBreweries(breweries));
 

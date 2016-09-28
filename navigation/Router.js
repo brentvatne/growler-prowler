@@ -10,4 +10,6 @@ export default createRouter(() => ({
   list: () => BreweryListScreen,
   details: () => BreweryDetailsScreen,
   authentication: () => AuthenticationScreen,
-}));
+}), {
+  ignoreSerializableWarnings: true,
+});

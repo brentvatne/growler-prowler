@@ -16,6 +16,11 @@ import { RegularText, BoldText } from './StyledText';
 import formatTime from '../util/formatTime';
 
 export default class BreweryListItem extends React.Component {
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.brewery !== this.props.brewery;
+  }
+
   render() {
     let {
       smallLogo,

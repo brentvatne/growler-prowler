@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Image,
   Platform,
   StyleSheet,
   View,
@@ -8,10 +9,12 @@ import {
 import { connect } from 'react-redux';
 import { Facebook } from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import FadeIn from '@exponent/react-native-fade-in-image';
 
 import Actions from '../state/Actions';
 import Layout from '../constants/Layout';
 import { RegularText } from './StyledText';
+import { User } from '../state/Records';
 
 @connect()
 export default class AuthenticationScreen extends React.Component {
@@ -24,6 +27,12 @@ export default class AuthenticationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <FadeIn placeholderStyle={{backgroundColor: 'transparent'}}>
+          <Image
+            style={{width: 150, height: 244, marginBottom: 30,}}
+            source={require('../assets/images/logo.png')}
+          />
+        </FadeIn>
         <TouchableNativeFeedback onPress={this._signInWithFacebook}>
           <View style={styles.facebookButton}>
             <RegularText style={styles.facebookButtonText}>
@@ -53,17 +62,17 @@ export default class AuthenticationScreen extends React.Component {
       let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}`);
       let info = await response.json();
 
-      this.props.dispatch(Actions.signIn({
+      this.props.dispatch(Actions.signIn(new User({
         id: info.id,
         authToken: result.token,
         name: info.name,
         isGuest: false,
-      }));
+      })));
     }
   }
 
   _continueAsGuest = () => {
-    this.props.dispatch(Actions.signIn({isGuest: true}));
+    this.props.dispatch(Actions.signIn(new User({isGuest: true})));
   }
 }
 

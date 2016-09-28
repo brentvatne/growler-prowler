@@ -47,11 +47,17 @@ export default class BreweryListScreen extends React.Component {
     menuValue: new Animated.Value(0),
   }
 
+  componentDidMount() {
+    this.props.dispatch(Actions.computeDistances());
+  }
+
   render() {
+    let { selectedOption } = this.state;
+
     return (
       <View style={styles.container}>
-        {this.state.selectedOption === 'All' && <BreweryList />}
-        {this.state.selectedOption === 'Nearby' && <BreweryList nearby />}
+        {selectedOption === 'All' && <BreweryList key="list" />}
+        {selectedOption === 'Nearby' && <BreweryList key="list" nearby />}
         {this._renderMenuOverlay()}
         {this._renderMenu()}
         {this._renderNavigationBar()}

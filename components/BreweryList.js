@@ -18,9 +18,9 @@ export default class BreweryList extends React.Component {
     let breweries;
 
     if (props.nearby) {
-      breweries = data.nearbyBreweries;
+      breweries = data.breweries.nearby;
     } else {
-      breweries = data.breweries;
+      breweries = data.breweries.all;
     }
 
     return {

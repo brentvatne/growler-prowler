@@ -10,5 +10,5 @@ function genericErrorHandler({action, error}) {
 export default [
   {action: ActionTypes.SIGN_IN, effect: signInAsync, error: genericErrorHandler},
   {action: ActionTypes.SIGN_OUT, effect: signOutAsync, error: genericErrorHandler},
-  {action: ActionTypes.SET_BREWERIES, effect: computeDistancesAsync, error: genericErrorHandler},
+  {action: ActionTypes.COMPUTE_DISTANCES, effect: computeDistancesAsync, error: genericErrorHandler},
 ];

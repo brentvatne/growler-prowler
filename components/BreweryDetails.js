@@ -17,7 +17,7 @@ import Exponent, {
 } from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import {
-  NavigationBar
+  NavigationBar,
 } from '@exponent/ex-navigation';
 
 import {
@@ -39,6 +39,41 @@ export default class BreweryDetails extends React.Component {
   }
 
   render() {
+    let { brewery } = this.props;
+    let { scrollY } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <View style={{flex: 1, marginTop: -50}}>
+          {this._renderHeroHeader()}
+
+          <Animated.ScrollView
+            scrollEventThrottle={16}
+            style={StyleSheet.absoluteFill}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+              { useNativeDriver: true }
+            )}>
+            <View style={styles.heroSpacer} />
+
+            <View style={styles.contentContainerStyle}>
+              <MapCard brewery={brewery} onPress={this._handlePressDirections} />
+              <SummaryCard text={brewery.summary} />
+              <DescriptionCard text={brewery.description} />
+              <InstagramPhotosCard profile={brewery.instagram} />
+            </View>
+          </Animated.ScrollView>
+        </View>
+
+        {this._renderNavigationBarShadow()}
+        {this._renderNavigationBar()}
+
+        <StatusBar barStyle={getBarStyle(brewery.color)} />
+      </View>
+    );
+  }
+
+  _renderHeroHeader() {
     let { brewery } = this.props;
     let { scrollY } = this.state;
 
@@ -66,48 +101,27 @@ export default class BreweryDetails extends React.Component {
       inputRange: [-1, 0, 1],
       outputRange: [1, 0, -1],
     });
-
     return (
-      <View style={styles.container}>
-        <View style={{flex: 1, marginTop: -50}}>
-          <Animated.View style={[styles.heroBackground, {backgroundColor: brewery.color, transform: [{translateY: heroBackgroundTranslateY}]}]} />
+      <View>
+        <Animated.View style={[
+          styles.heroBackground,
+          { backgroundColor: brewery.color,
+            transform: [{translateY: heroBackgroundTranslateY}] }]}
+         />
 
-          <View style={styles.hero}>
-            <Animated.Image
-              source={{uri: brewery.logo}}
-              style={{width: 210, height: 190, marginTop: 80, opacity: logoOpacity, transform: [{scale: logoScale}, {translateY: logoTranslateY}]}}
-              resizeMode="contain"
+        <View style={styles.hero}>
+          <Animated.Image
+            source={{uri: brewery.logo}}
+            style={[styles.heroImage, {opacity: logoOpacity, transform: [{scale: logoScale}, {translateY: logoTranslateY}]}]}
+            resizeMode="contain"
+          />
+          <Animated.View style={[styles.heroBottomGradientContainer, {transform: [{translateY: gradientTranslateY}]}]}>
+            <Components.LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.07)']}
+              style={{width: Layout.window.width, height: 30}}
             />
-            <Animated.View style={{position: 'absolute', left: 0, right: 0, bottom: 0, transform: [{translateY: gradientTranslateY}]}}>
-              <Components.LinearGradient
-                colors={['transparent', 'rgba(0,0,0,0.07)']}
-                style={{width: Layout.window.width, height: 30}}
-              />
-            </Animated.View>
-          </View>
-
-          <Animated.ScrollView
-            scrollEventThrottle={16}
-            style={StyleSheet.absoluteFill}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-              { useNativeDriver: true }
-            )}>
-            <View style={styles.heroSpacer} />
-
-            <View style={styles.contentContainerStyle}>
-              <MapCard brewery={brewery} onPress={this._handlePressDirections} />
-              <SummaryCard text={brewery.summary} />
-              <DescriptionCard text={brewery.description} />
-              <InstagramPhotosCard profile={brewery.instagram} />
-            </View>
-          </Animated.ScrollView>
+          </Animated.View>
         </View>
-
-        {this._renderNavigationBarShadow()}
-        {this._renderNavigationBar()}
-
-        <StatusBar barStyle={brewery.color === '#fff' || brewery.color === '#f8fcf7' ? 'default' : 'light-content'} />
       </View>
     );
   }
@@ -173,12 +187,12 @@ export default class BreweryDetails extends React.Component {
 
   _renderNavigationBarTitle() {
     let {
-      name,
       accentColor,
-      openingTimeToday,
       closingTimeToday,
       isOpen,
       isOpeningLater,
+      name,
+      openingTimeToday,
     } = this.props.brewery;
 
     let { scrollY } = this.state;
@@ -248,6 +262,13 @@ export default class BreweryDetails extends React.Component {
   }
 }
 
+function getBarStyle(color) {
+  if (color === '#fff' || color === '#f8fcf7') {
+    return 'default';
+  } else {
+    return 'light-content';
+  }
+}
 
 const HeroHeight = 370;
 
@@ -256,19 +277,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAFAFA',
   },
-  heroSpacer: {
-    width: Layout.window.width,
-    height: HeroHeight,
-    backgroundColor: 'transparent',
-  },
   contentContainerStyle: {
     paddingBottom: 30,
     backgroundColor: '#FAFAFA',
     minHeight: Layout.window.height - HeroHeight,
   },
-  navigationBarTitleText: {
-    color: '#fff',
-    textAlign: 'center',
+  heroSpacer: {
+    width: Layout.window.width,
+    height: HeroHeight,
+    backgroundColor: 'transparent',
+  },
+  heroImage: {
+    width: 210,
+    height: 190,
+    marginTop: 80,
   },
   heroBackground: {
     height: HeroHeight + 250,
@@ -282,6 +304,16 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  heroBottomGradientContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  navigationBarTitleText: {
+    color: '#fff',
+    textAlign: 'center',
   },
   navigationBarAction: {
     width: 40,

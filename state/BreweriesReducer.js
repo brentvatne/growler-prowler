@@ -1,8 +1,8 @@
 import ActionTypes from './ActionTypes';
-import _ from 'lodash';
+import { BreweriesState, Brewery } from './Records';
 
 class BreweriesReducer {
-  static reduce(state = [], action) {
+  static reduce(state = new BreweriesState(), action) {
     if (BreweriesReducer[action.type]) {
       return BreweriesReducer[action.type](state, action);
     } else {
@@ -11,7 +11,12 @@ class BreweriesReducer {
   }
 
   static [ActionTypes.SET_BREWERIES](state, action) {
-    return _.sortBy(action.breweries, brewery => brewery.name);
+    let breweries = action.breweries.sortBy(brewery => brewery.name);
+    return state.set('all', breweries);
+  }
+
+  static [ActionTypes.SET_NEARBY_BREWERIES](state, action) {
+    return state.set('nearby', action.breweries);
   }
 }
 
