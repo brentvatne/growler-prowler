@@ -4,7 +4,7 @@ import {
 } from 'react-redux';
 
 import Actions from '../state/Actions';
-import BreweryDetails from './BreweryDetails';
+import BreweryDetails from '../components/BreweryDetails';
 
 @connect((data, props) => BreweryDetailsScreen.getDataProps(data, props))
 export default class BreweryDetailsScreen extends React.Component {

@@ -13,7 +13,7 @@ import FadeIn from '@exponent/react-native-fade-in-image';
 
 import Actions from '../state/Actions';
 import Layout from '../constants/Layout';
-import { RegularText } from './StyledText';
+import { RegularText } from '../components/StyledText';
 import { User } from '../state/Records';
 
 @connect()

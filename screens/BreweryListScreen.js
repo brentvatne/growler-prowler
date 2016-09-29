@@ -12,10 +12,6 @@ import {
   NavigationBar
 } from '@exponent/ex-navigation';
 import {
-  BoldText,
-  RegularText,
-} from './StyledText';
-import {
   Constants,
 } from 'exponent';
 import {
@@ -25,8 +21,12 @@ import { connect } from 'react-redux';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
 import Actions from '../state/Actions';
-import BreweryList from './BreweryList';
+import BreweryList from '../components/BreweryList';
 import Layout from '../constants/Layout';
+import {
+  BoldText,
+  RegularText,
+} from '../components/StyledText';
 
 const MenuOptions = [
   'All',
@@ -137,9 +137,9 @@ export default class BreweryListScreen extends React.Component {
           </TouchableWithoutFeedback>
         </View>
 
-        <View style={styles.navigationBarLeftButton}>
-          <TouchableNativeFeedback onPress={this._handlePressSignOut}>
-            <MaterialIcons name="exit-to-app" size={23} style={{transform: [{rotate: '180deg'}]}} />
+        <View style={styles.navigationBarRightButton}>
+          <TouchableNativeFeedback onPress={this._handlePressUpdateLocation}>
+            <MaterialIcons name="my-location" size={20} />
           </TouchableNativeFeedback>
         </View>
       </View>
@@ -161,8 +161,8 @@ export default class BreweryListScreen extends React.Component {
     }).start();
   }
 
-  _handlePressSignOut = () => {
-    this.props.dispatch(Actions.signOut());
+  _handlePressUpdateLocation = () => {
+    this.props.dispatch(Actions.computeDistances());
   }
 }
 
@@ -189,17 +189,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: Platform.OS === 'ios' ? 'center' : 'flex-start',
-    // Remove this paddingLeft conditional when we get rid of the button
-    paddingLeft: Platform.OS === 'ios' ? 20 : 20 + 30,
   },
   navigationBarTitle: {
     fontSize: 17,
     letterSpacing: -0.5,
   },
-  navigationBarLeftButton: {
+  navigationBarRightButton: {
     position: 'absolute',
     top: 0,
-    left: 15,
+    right: 15,
     bottom: 0,
     top: Constants.statusBarHeight,
     justifyContent: 'center',

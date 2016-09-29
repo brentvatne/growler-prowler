@@ -56,7 +56,7 @@ class App extends React.Component {
     const currentlySignedIn = isSignedIn(this.props.currentUser);
 
     if (!previouslySignedIn && currentlySignedIn) {
-      rootNavigator.replace('list');
+      rootNavigator.replace('tabNavigation');
     } else if (previouslySignedIn && !currentlySignedIn) {
       rootNavigator.replace('authentication');
     }
