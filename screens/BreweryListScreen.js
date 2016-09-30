@@ -19,6 +19,7 @@ import {
 } from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import Modal from 'react-native-root-modal';
 
 import Actions from '../state/Actions';
 import BreweryList from '../components/BreweryList';
@@ -63,9 +64,12 @@ export default class BreweryListScreen extends React.Component {
         {selectedOption === 'Visited' && <BreweryList key="list" visited />}
         {selectedOption === 'Unvisited' && <BreweryList key="list" notVisited />}
 
-        {this._renderMenuOverlay()}
-        {this._renderMenu()}
         {this._renderNavigationBar()}
+
+        <Modal style={styles.menuModal} visible={this.state.menuIsVisible}>
+          {this._renderMenuOverlay()}
+          {this._renderMenu()}
+        </Modal>
       </View>
     );
   }
@@ -153,12 +157,23 @@ export default class BreweryListScreen extends React.Component {
 
   _handleToggleMenu = () => {
     let { menuIsVisible } = this.state;
+    let onCompleteAnimation = () => {}
 
-    this.setState({menuIsVisible: !menuIsVisible});
+    // When transitioning from visible->hidden, we wait until the animation
+    // completes before updating the state, otherwise it will be hidden
+    // before the animation can be run
+    if (this.state.menuIsVisible) {
+      onCompleteAnimation = ({finished}) => {
+        this.setState({menuIsVisible: false});
+      }
+    } else {
+      this.setState({menuIsVisible: true});
+    }
+
     Animated.spring(this.state.menuValue, {
       toValue: menuIsVisible ? 0 : 1,
       overshootClamping: true,
-    }).start();
+    }).start(onCompleteAnimation);
   }
 
   _handlePressUpdateLocation = () => {
@@ -204,9 +219,14 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: 'absolute',
-    top: NavigationBar.DEFAULT_HEIGHT,
+    top: 0,
     left: 0,
     right: 0,
+  },
+  menuModal: {
+    ...StyleSheet.absoluteFillObject,
+    top: NavigationBar.DEFAULT_HEIGHT,
+    overflow: 'hidden',
   },
   menuOption: {
     borderBottomWidth: StyleSheet.hairlineWidth,
