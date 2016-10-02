@@ -29,6 +29,7 @@ export default class BreweryListItem extends React.Component {
 
     return (
       <TouchableNativeFeedback
+        delayPressIn={80}
         onPress={this.props.onPress}
         delayPressIn={80}
         style={styles.container}
