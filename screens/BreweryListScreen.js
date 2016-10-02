@@ -36,6 +36,9 @@ const MenuOptions = [
   'Unvisited'
 ];
 
+const maxOffset = NavigationBar.DEFAULT_HEIGHT - Constants.statusBarHeight;
+const minScrollViewHeight = 100;
+
 @connect()
 export default class BreweryListScreen extends React.Component {
   static route = {
@@ -45,24 +48,78 @@ export default class BreweryListScreen extends React.Component {
   }
 
   state = {
-    selectedOption: MenuOptions[0],
     menuIsVisible: false,
+    contentHeight: Layout.window.height,
+    scrollViewHeight: Layout.window.height - minScrollViewHeight,
     menuValue: new Animated.Value(0),
+    scrollY: new Animated.Value(0),
+    navBarShowAnim: new Animated.Value(0),
+    selectedOption: MenuOptions[0],
   }
+
+  _lastToValue = 0;
+  _scrollY = 0;
+  _prevScrollY = 0;
+  _hasMomentum = false;
+  _scrollEndTimer: any;
 
   componentDidMount() {
     this.props.dispatch(Actions.computeDistances());
+
+    this.state.scrollY.addListener(({value}) => {
+      this._prevScrollY = this._scrollY;
+      this._scrollY = value;
+    });
   }
+
+  _onScrollEndDrag = () => {
+    let { navBarShowAnim } = this.state;
+    let deltaY = this._scrollY - this._prevScrollY;
+
+    let toValue;
+    if (deltaY > 0 && this._scrollY >= maxOffset) {
+      if (this._prevToValue < 0) {
+        toValue = this._prevToValue - maxOffset;
+      } else {
+        toValue = -maxOffset;
+      }
+    } else {
+      if (this._prevToValue > 0) {
+        toValue = this._prevToValue + maxOffset;
+      } else {
+        toValue = maxOffset;
+      }
+    }
+
+    this._prevToValue = toValue;
+
+    Animated.timing(navBarShowAnim, {
+      toValue,
+      duration: 150,
+      useNativeDriver: false,
+    }).start();
+  };
 
   render() {
     let { selectedOption } = this.state;
+    let defaultListProps = {
+      key: 'list',
+      contentContainerStyle: {marginTop: NavigationBar.DEFAULT_HEIGHT},
+      onContentSizeChange: (w, h) => { this.setState({contentHeight: h}) },
+      onLayout: ({nativeEvent}) => { this.setState({scrollViewHeight: nativeEvent.layout.height}) },
+      onScrollEndDrag: this._onScrollEndDrag,
+      onScroll: Animated.event(
+        [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+        { useNativeDriver: false }
+      )
+    };
 
     return (
       <View style={styles.container}>
-        {selectedOption === 'All' && <BreweryList key="list" />}
-        {selectedOption === 'Nearby' && <BreweryList key="list" nearby />}
-        {selectedOption === 'Visited' && <BreweryList key="list" visited />}
-        {selectedOption === 'Unvisited' && <BreweryList key="list" notVisited />}
+        {selectedOption === 'All' && <BreweryList {...defaultListProps} />}
+        {selectedOption === 'Nearby' && <BreweryList {...defaultListProps} nearby />}
+        {selectedOption === 'Visited' && <BreweryList {...defaultListProps} visited />}
+        {selectedOption === 'Unvisited' && <BreweryList {...defaultListProps} notVisited />}
 
         {this._renderNavigationBar()}
 
@@ -118,14 +175,69 @@ export default class BreweryListScreen extends React.Component {
   }
 
   _renderNavigationBar() {
-    let arrowRotation = this.state.menuValue.interpolate({
+    let {
+      contentHeight,
+      menuValue,
+      navBarShowAnim,
+      scrollViewHeight,
+      scrollY,
+    } = this.state;
+
+    let arrowRotation = menuValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['90deg', '-90deg'],
     });
 
+    const maxScrollY = Math.max(
+      contentHeight - scrollViewHeight + maxOffset,
+      minScrollViewHeight + 1,
+    );
+
+    let clampedScrollY = scrollY.interpolate({
+      inputRange: [-1, 0, maxScrollY, maxScrollY + 1],
+      outputRange: [0, 0, maxScrollY, maxScrollY]
+    });
+
+    let invertedClampedScrollY = clampedScrollY.interpolate({
+      inputRange: [-1, 0, 1],
+      outputRange: [-1, 0, -1],
+    });
+
+    let invertedDiffClampedScrollY = Animated.diffClamp(
+      invertedClampedScrollY,
+      -maxOffset,
+      0,
+    );
+
+    let combinedClampedScrollY = Animated.add(
+      invertedDiffClampedScrollY,
+      navBarShowAnim
+    );
+
+    let translateY = Animated.diffClamp(
+      combinedClampedScrollY,
+      -maxOffset,
+      0,
+    );
+
+    let opacity = translateY.interpolate({
+      inputRange: [-maxOffset, -maxOffset / 2, 0],
+      outputRange: [0, 0, 1],
+    });
+
+    let scale = translateY.interpolate({
+      inputRange: [-maxOffset, 0],
+      outputRange: [0, 1],
+    });
+
+    let contentTranslateY = translateY.interpolate({
+      inputRange: [-maxOffset, 0],
+      outputRange: [maxOffset / 1.5, 0],
+    });
+
     return (
-      <View style={styles.navigationBarContainer}>
-        <View style={styles.navigationBarTitleContainer}>
+      <Animated.View style={[styles.navigationBarContainer, {overflow: 'hidden', paddingTop: Constants.statusBarHeight, transform: [{translateY}]}]}>
+        <Animated.View style={[styles.navigationBarTitleContainer, {opacity, transform: [{scale}, {translateY: contentTranslateY}]}]}>
           <TouchableWithoutFeedback
             hitSlop={{left: 40, top: 30, right: 40, bottom: 10}}
             onPress={this._handleToggleMenu}>
@@ -139,14 +251,14 @@ export default class BreweryListScreen extends React.Component {
               </Animated.View>
             </View>
           </TouchableWithoutFeedback>
-        </View>
+        </Animated.View>
 
-        <View style={styles.navigationBarRightButton}>
+        <Animated.View style={[styles.navigationBarRightButton, {opacity, transform: [{scale}, {translateY: contentTranslateY}]}]}>
           <TouchableNativeFeedback onPress={this._handlePressUpdateLocation}>
             <MaterialIcons name="my-location" size={20} />
           </TouchableNativeFeedback>
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     );
   }
 
@@ -184,7 +296,6 @@ export default class BreweryListScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: NavigationBar.DEFAULT_HEIGHT,
   },
   navigationBarContainer: {
     elevation: 1,
@@ -196,7 +307,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    paddingTop: Constants.statusBarHeight,
   },
   navigationBarTitleContainer: {
     flex: 1,

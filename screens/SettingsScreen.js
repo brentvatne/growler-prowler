@@ -2,6 +2,7 @@ import React from 'react';
 import {
   TouchableHighlight,
   ScrollView,
+  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
@@ -70,6 +71,8 @@ export default class SettingsScreen extends React.Component {
             </View>
           </TouchableNativeFeedback>
         </View>
+
+        <StatusBar barStyle="default" />
       </View>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Animated,
   Platform,
   ScrollView,
   StatusBar,
@@ -45,19 +46,28 @@ export default class BreweryList extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {
-          this.props.breweries.map(brewery => (
-            <BreweryListItem
-              onPress={() => this._handlePressBrewery(brewery)}
-              brewery={brewery}
-              key={brewery.name}
-            />
-          ))
-        }
+      <View onLayout={this.props.onLayout} style={styles.container}>
+        <Animated.ScrollView
+          contentContainerStyle={this.props.contentContainerStyle}
+          style={styles.container}
+          onScroll={this.props.onScroll}
+          onScrollBeginDrag={this.props.onScrollBeginDrag}
+          onScrollEndDrag={this.props.onScrollEndDrag}
+          onContentSizeChange={this.props.onContentSizeChange}
+          scrollEventThrottle={16}>
+          {
+            this.props.breweries.map(brewery => (
+              <BreweryListItem
+                onPress={() => this._handlePressBrewery(brewery) }
+                brewery={brewery}
+                key={brewery.name}
+              />
+            ))
+          }
 
-        <StatusBar barStyle="default" />
-      </ScrollView>
+          <StatusBar barStyle="default" />
+        </Animated.ScrollView>
+      </View>
     );
   }
 
