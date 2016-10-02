@@ -27,12 +27,13 @@ export default class BreweryListItem extends React.Component {
       name,
     } = this.props.brewery;
 
+
     return (
       <TouchableNativeFeedback
         delayPressIn={80}
-        onPress={this.props.onPress}
         style={styles.container}
         fallback={TouchableHighlight}
+        onPress={this.props.onPress}
         underlayColor="#ccc">
         <View style={styles.logoContainer}>
           <FadeIn placeholderStyle={{backgroundColor: Platform.OS === 'android' ? 'transparent' : '#eee'}}>

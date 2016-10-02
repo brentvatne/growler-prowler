@@ -304,27 +304,24 @@ export class VisitedCard extends React.Component {
     } = this.props;
 
     return (
-      <View>
-        <View style={styles.cardLabel}>
-          <BoldText style={styles.cardLabelText}>
-            Been here before?
-          </BoldText>
-        </View>
-
+      <View style={{marginTop: 15}}>
         <View style={styles.card}>
           <TouchableNativeFeedback
             onPress={this._onToggleVisited}
             fallback={TouchableHighlight}
             underlayColor="#eee">
             <View style={[styles.cardBody, styles.visitedCardBody]}>
-                <MaterialIcons
-                  name={isVisited ? "check-box" : "check-box-outline-blank"}
-                  size={25}
-                  style={{opacity: isVisited ? 1 : 0.5}}
-                />
-              <RegularText style={[styles.visitedCardText, {opacity: isVisited ? 1 : 0.7}]}>
-                { isVisited ? "You've been here" : "You still need to check this one out" }
-              </RegularText>
+              <View style={{flex: 1}}>
+                <RegularText style={[styles.visitedCardText, {opacity: isVisited ? 1 : 0.7}]}>
+                  { isVisited ? "You've been here" : "You still need to check this one out" }
+                </RegularText>
+              </View>
+
+              <MaterialIcons
+                name={isVisited ? "check-box" : "check-box-outline-blank"}
+                size={25}
+                style={{opacity: isVisited ? 1 : 0.5}}
+              />
             </View>
           </TouchableNativeFeedback>
         </View>

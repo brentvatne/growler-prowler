@@ -17,7 +17,7 @@ import { RegularText, BoldText } from '../components/StyledText';
 export default class SettingsScreen extends React.Component {
   static route = {
     navigationBar: {
-      title: 'Settings',
+      title: 'Options',
     },
   }
 
