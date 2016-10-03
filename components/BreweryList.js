@@ -64,6 +64,8 @@ export default class BreweryList extends React.Component {
           contentContainerStyle={this.props.contentContainerStyle}
           style={styles.container}
           onScroll={this.props.onScroll}
+          onResponderRelease={this.props.onMomentumScrollEnd}
+          onResponderTerminate={this.props.onMomentumScrollEnd}
           onMomentumScrollBegin={this.props.onMomentumScrollBegin}
           onMomentumScrollEnd={this.props.onMomentumScrollEnd}
           onScrollBeginDrag={this.props.onScrollBeginDrag}

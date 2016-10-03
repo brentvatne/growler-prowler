@@ -280,8 +280,17 @@ export default class BreweryListScreen extends React.Component {
     } = this._getNavigationBarAnimatedStyles(maxScrollY);
 
     return (
-      <Animated.View key="navbar" style={[styles.navigationBarContainer, {overflow: 'hidden', paddingTop: Constants.statusBarHeight, transform: [{translateY}]}]}>
-        <Animated.View style={[styles.navigationBarTitleContainer, {opacity, transform: [{scale}, {translateY: contentTranslateY}]}]}>
+      <Animated.View
+        key="navbar"
+        style={[
+          styles.navigationBarContainer,
+          {overflow: 'hidden', paddingTop: Constants.statusBarHeight, transform: [{translateY}]}
+        ]}>
+        <Animated.View
+          style={[
+            styles.navigationBarTitleContainer,
+            {opacity, transform: [{scale}, {translateY: contentTranslateY}]}
+          ]}>
           <TouchableWithoutFeedback
             hitSlop={{left: 40, top: 30, right: 40, bottom: 10}}
             onPress={this._handleToggleMenu}>
@@ -297,7 +306,11 @@ export default class BreweryListScreen extends React.Component {
           </TouchableWithoutFeedback>
         </Animated.View>
 
-        <Animated.View style={[styles.navigationBarRightButton, {opacity, transform: [{scale}, {translateY: contentTranslateY}]}]}>
+        <Animated.View
+          style={[
+            styles.navigationBarRightButton,
+            {opacity, transform: [{scale}, {translateY: contentTranslateY}]}
+          ]}>
           <TouchableNativeFeedback onPress={this._handlePressUpdateLocation}>
             <MaterialIcons name="my-location" size={20} />
           </TouchableNativeFeedback>
@@ -314,6 +327,16 @@ export default class BreweryListScreen extends React.Component {
   _handleToggleMenu = () => {
     if (this._hasMomentum) {
       return;
+    }
+
+    let { translateY } = this._getNavigationBarAnimatedStyles(this.state.maxScrollY);
+    let currentTranslateY = translateY.__getValue();
+    if (currentTranslateY < 0) {
+      this._list.scrollTo({
+        y: this._scrollY - (maxOffset + currentTranslateY),
+        x: 0,
+        animated: true,
+      });
     }
 
     let { menuIsVisible } = this.state;
