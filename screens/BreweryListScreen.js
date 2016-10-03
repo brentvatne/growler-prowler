@@ -50,16 +50,17 @@ export default class BreweryListScreen extends React.Component {
   state = {
     menuIsVisible: false,
     contentHeight: Layout.window.height,
+    maxScrollY: minScrollViewHeight,
     scrollViewHeight: Layout.window.height - minScrollViewHeight,
     menuValue: new Animated.Value(0),
     scrollY: new Animated.Value(0),
-    navBarShowAnim: new Animated.Value(0),
     selectedOption: MenuOptions[0],
   }
 
+  _initialScrollYForTouch: 0;
   _lastToValue = 0;
   _scrollY = 0;
-  _prevScrollY = 0;
+  _hasScroll = false;
   _hasMomentum = false;
   _scrollEndTimer: any;
 
@@ -67,46 +68,78 @@ export default class BreweryListScreen extends React.Component {
     this.props.dispatch(Actions.computeDistances());
 
     this.state.scrollY.addListener(({value}) => {
-      this._prevScrollY = this._scrollY;
-      this._scrollY = value;
+      this._scrollY = Math.min(Math.max(0, value), this.state.maxScrollY);
     });
   }
 
-  _onScrollEndDrag = () => {
-    let { navBarShowAnim } = this.state;
-    let deltaY = this._scrollY - this._prevScrollY;
+  _onMomentumScrollBegin = () => {
+    this._hasMomentum = true;
+  }
 
-    let toValue;
-    if (deltaY > 0 && this._scrollY >= maxOffset) {
-      if (this._prevToValue < 0) {
-        toValue = this._prevToValue - maxOffset;
-      } else {
-        toValue = -maxOffset;
+  _onMomentumScrollEnd = () => {
+    clearTimeout(this._scrollEndTimer);
+    this._hasMomentum = false;
+    this._onScrollEnd();
+  };
+
+  _onScrollBeginDrag = () => {
+    this._initialScrollYForTouch = this._scrollY;
+  }
+
+  _onScrollEndDrag = () => {
+    // `onMomentumScrollEnd` is not always called so wait a little bit to check
+    // if there is momentum scrolling and if there is adjust navbar in
+    // `onMomentumScrollEnd` instead.
+    clearTimeout(this._scrollEndTimer);
+    this._scrollEndTimer = setTimeout(() => {
+      if (!this._hasMomentum) {
+        this._onScrollEnd();
       }
-    } else {
-      if (this._prevToValue > 0) {
-        toValue = this._prevToValue + maxOffset;
-      } else {
-        toValue = maxOffset;
-      }
+    }, 100);
+  };
+
+  _onScrollEnd = () => {
+    let deltaY = this._scrollY - this._initialScrollYForTouch;
+
+    if (deltaY > maxOffset || deltaY < -maxOffset) {
+      return;
     }
 
-    this._prevToValue = toValue;
+    if (this._scrollY <= 0 || this._scrollY >= this.state.maxScrollY) {
+      return;
+    }
 
-    Animated.timing(navBarShowAnim, {
-      toValue,
-      duration: 150,
-      useNativeDriver: false,
-    }).start();
+    if (deltaY > 0) {
+      this._list.scrollTo({
+        y: this._scrollY + maxOffset - deltaY,
+        x: 0,
+        animated: true,
+      });
+    } else {
+      this._list.scrollTo({
+        y: this._scrollY + (-maxOffset - deltaY),
+        x: 0,
+        animated: true,
+      });
+    }
   };
+
+  _updateContentHeight = (w, h) => {
+    const maxScrollY = Math.max(h - this.state.scrollViewHeight + maxOffset, 101);
+    this.setState({contentHeight: h, maxScrollY});
+  }
 
   render() {
     let { selectedOption } = this.state;
     let defaultListProps = {
       key: 'list',
+      setRef: view => { this._list = view; },
       contentContainerStyle: {marginTop: NavigationBar.DEFAULT_HEIGHT},
-      onContentSizeChange: (w, h) => { this.setState({contentHeight: h}) },
+      onContentSizeChange: this._updateContentHeight,
       onLayout: ({nativeEvent}) => { this.setState({scrollViewHeight: nativeEvent.layout.height}) },
+      onMomentumScrollBegin: this._onMomentScrollBegin,
+      onMomentumScrollEnd: this._onMomentScrollEnd,
+      onScrollBeginDrag: this._onScrollBeginDrag,
       onScrollEndDrag: this._onScrollEndDrag,
       onScroll: Animated.event(
         [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
@@ -174,48 +207,27 @@ export default class BreweryListScreen extends React.Component {
     );
   }
 
-  _renderNavigationBar() {
+  _navigationBarAnimatedStyles = {};
+
+  _getNavigationBarAnimatedStyles = (maxScrollY) => {
+    if (this._navigationBarAnimatedStyles.maxScrollY !== maxScrollY) {
+      this._navigationBarAnimatedStyles = {};
+    } else if (Object.keys(this._navigationBarAnimatedStyles).length) {
+      return this._navigationBarAnimatedStyles;
+    }
+
     let {
-      contentHeight,
-      menuValue,
-      navBarShowAnim,
-      scrollViewHeight,
       scrollY,
     } = this.state;
 
-    let arrowRotation = menuValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['90deg', '-90deg'],
+    let invertedClampedScrollY = scrollY.interpolate({
+      inputRange: [0, maxScrollY],
+      outputRange: [0, -maxScrollY],
+      extrapolate: 'clamp',
     });
-
-    const maxScrollY = Math.max(
-      contentHeight - scrollViewHeight + maxOffset,
-      minScrollViewHeight + 1,
-    );
-
-    let clampedScrollY = scrollY.interpolate({
-      inputRange: [-1, 0, maxScrollY, maxScrollY + 1],
-      outputRange: [0, 0, maxScrollY, maxScrollY]
-    });
-
-    let invertedClampedScrollY = clampedScrollY.interpolate({
-      inputRange: [-1, 0, 1],
-      outputRange: [-1, 0, -1],
-    });
-
-    let invertedDiffClampedScrollY = Animated.diffClamp(
-      invertedClampedScrollY,
-      -maxOffset,
-      0,
-    );
-
-    let combinedClampedScrollY = Animated.add(
-      invertedDiffClampedScrollY,
-      navBarShowAnim
-    );
 
     let translateY = Animated.diffClamp(
-      combinedClampedScrollY,
+      invertedClampedScrollY,
       -maxOffset,
       0,
     );
@@ -235,8 +247,40 @@ export default class BreweryListScreen extends React.Component {
       outputRange: [maxOffset / 1.5, 0],
     });
 
+    this._navigationBarAnimatedStyles = {
+      maxScrollY,
+      translateY,
+      opacity,
+      scale,
+      contentTranslateY,
+    };
+
+    return this._navigationBarAnimatedStyles;
+  }
+
+  _renderNavigationBar() {
+    let {
+      contentHeight,
+      maxScrollY,
+      menuValue,
+      navBarShowAnim,
+      scrollViewHeight,
+    } = this.state;
+
+    let arrowRotation = menuValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['90deg', '-90deg'],
+    });
+
+    let {
+      translateY,
+      opacity,
+      scale,
+      contentTranslateY,
+    } = this._getNavigationBarAnimatedStyles(maxScrollY);
+
     return (
-      <Animated.View style={[styles.navigationBarContainer, {overflow: 'hidden', paddingTop: Constants.statusBarHeight, transform: [{translateY}]}]}>
+      <Animated.View key="navbar" style={[styles.navigationBarContainer, {overflow: 'hidden', paddingTop: Constants.statusBarHeight, transform: [{translateY}]}]}>
         <Animated.View style={[styles.navigationBarTitleContainer, {opacity, transform: [{scale}, {translateY: contentTranslateY}]}]}>
           <TouchableWithoutFeedback
             hitSlop={{left: 40, top: 30, right: 40, bottom: 10}}
@@ -268,6 +312,10 @@ export default class BreweryListScreen extends React.Component {
   }
 
   _handleToggleMenu = () => {
+    if (this._hasMomentum) {
+      return;
+    }
+
     let { menuIsVisible } = this.state;
     let onCompleteAnimation = () => {}
 

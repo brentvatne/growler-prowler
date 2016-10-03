@@ -40,17 +40,32 @@ export default class BreweryList extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.setRef && this.props.setRef(this);
+  }
+
+  componentDidUpdate() {
+    this.props.setRef && this.props.setRef(this);
+  }
+
   shouldComponentUpdate(nextProps) {
     return nextProps.breweries !== this.props.breweries;
+  }
+
+  scrollTo(opts) {
+    this._scrollView._component.scrollTo(opts);
   }
 
   render() {
     return (
       <View onLayout={this.props.onLayout} style={styles.container}>
         <Animated.ScrollView
+          ref={view => { this._scrollView = view; }}
           contentContainerStyle={this.props.contentContainerStyle}
           style={styles.container}
           onScroll={this.props.onScroll}
+          onMomentumScrollBegin={this.props.onMomentumScrollBegin}
+          onMomentumScrollEnd={this.props.onMomentumScrollEnd}
           onScrollBeginDrag={this.props.onScrollBeginDrag}
           onScrollEndDrag={this.props.onScrollEndDrag}
           onContentSizeChange={this.props.onContentSizeChange}
