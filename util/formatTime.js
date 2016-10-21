@@ -17,6 +17,6 @@ export default function formatTime(t) {
     return 'Midnight';
   }
 
-  let timeString = `${hours}:${minutes}${isEvening ? 'pm' : ''}`;
+  let timeString = `${hours}:${minutes}${isEvening ? 'pm' : 'am'}`;
   return time(timeString).format('h:mm AM');
 }

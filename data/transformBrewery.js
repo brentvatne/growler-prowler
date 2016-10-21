@@ -1,8 +1,7 @@
 import days from 'days';
 
-export default function transformBrewery(brewery) {
+export default function transformBrewery(brewery, currentDate = new Date()) {
   let { hours } = brewery;
-  let currentDate = new Date();
   let day = days[currentDate.getDay()];
   let currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:00`;
   let openingTimeToday = hours[`${day.toLowerCase()}_open`];

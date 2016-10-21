@@ -1531,4 +1531,4 @@ const breweries = [
   }
 ];
 
-export default breweries.map(transformBrewery);
+export default breweries.map(b => transformBrewery(b, new Date()));

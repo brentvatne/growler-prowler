@@ -5,6 +5,12 @@
   "author": "exponent.team@gmail.com",
   "private": true,
   "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-exponent"
+  },
   "dependencies": {
     "@exponent/ex-navigation": "^1.7.0-rc-3",
     "@exponent/react-native-fade-in-image": "^1.0.0",
@@ -24,5 +30,8 @@
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",
     "time-js": "0.0.5"
+  },
+  "devDependencies": {
+    "jest-exponent": "^0.1.0"
   }
 }
