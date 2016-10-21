@@ -17,5 +17,13 @@
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
+  },
+  "android": {
+    "package": "ca.brentvatne.growlerprowler",
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyCp-BUoX8B8699rkbnb2P2CK4gXSeesVcc"
+      }
+    }
   }
 }
