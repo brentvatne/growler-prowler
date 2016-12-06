@@ -156,7 +156,7 @@ export default class BreweryListScreen extends React.Component {
 
         {this._renderNavigationBar()}
 
-        <Modal style={styles.menuModal} visible={this.state.menuIsVisible}>
+        <Modal style={styles.menuModal} visible={this.state.menuIsVisible} collapsible={false}>
           {this._renderMenuOverlay()}
           {this._renderMenu()}
         </Modal>
@@ -408,6 +408,7 @@ const styles = StyleSheet.create({
   menuModal: {
     ...StyleSheet.absoluteFillObject,
     top: NavigationBar.DEFAULT_HEIGHT,
+    backgroundColor: 'transparent',
     overflow: 'hidden',
   },
   menuOption: {
