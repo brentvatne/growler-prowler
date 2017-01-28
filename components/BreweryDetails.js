@@ -265,7 +265,7 @@ export default class BreweryDetails extends React.Component {
 }
 
 function getBarStyle(color) {
-  if (color === '#fff' || color === '#f8fcf7') {
+  if (color === '#fff' || color === '#f8fcf7' || color === '#fab234') {
     return 'default';
   } else {
     return 'light-content';

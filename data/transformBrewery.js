@@ -1,6 +1,41 @@
 import days from 'days';
 
-export default function transformBrewery(brewery, currentDate = new Date()) {
+type BreweryHours = {
+  monday_open: string,
+  monday_close: string,
+  tuesday_open: string,
+  tuesday_close: string,
+  wednesday_open: string,
+  wednesday_close: string,
+  thursday_open: string,
+  thursday_close: string,
+  friday_open: string,
+  friday_close: string,
+  saturday_open: string,
+  saturday_close: string,
+  sunday_open: string,
+  sunday_close: string,
+}
+
+type BreweryData = {
+  accentColor?: string,
+  address: string,
+  city: string,
+  color?: string,
+  description: string,
+  hours: BreweryHours,
+  id: number,
+  latitude: string,
+  logo: string,
+  logo_small: string,
+  longitude: string,
+  postal_code: string,
+  social_instagram: string,
+  summary?: ?string,
+  title: string,
+}
+
+export default function transformBrewery(brewery: BreweryData, currentDate = new Date()): any {
   let { hours } = brewery;
   let day = days[currentDate.getDay()];
   let currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:00`;
@@ -35,7 +70,7 @@ export default function transformBrewery(brewery, currentDate = new Date()) {
     name: brewery.title,
     openingTimeToday,
     postalCode: brewery.postal_code.split(' ').join('').toUpperCase(),
-    smallLogo: brewery.logo_350,
+    smallLogo: brewery.logo_small,
     summary: brewery.summary,
   };
 }

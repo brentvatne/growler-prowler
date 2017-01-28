@@ -110,7 +110,7 @@ export class InstagramPhotosCard extends React.Component {
           imageUrl: item.images.standard_resolution.url,
           width: item.images.standard_resolution.width,
           height: item.images.standard_resolution.height,
-          description: item.caption.text,
+          description: item.caption && item.caption.text,
         }));
         this.setState({images: images.slice(0, 6)});
       }
@@ -196,12 +196,18 @@ export class MapCard extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     InteractionManager.runAfterInteractions(() => {
-      this.setState({shouldRenderMap: true});
+      this._isMounted && this.setState({shouldRenderMap: true});
       setTimeout(() => {
-        this.setState({shouldRenderOverlay: false});
-      }, Platform.OS === 'android' ? 700 : 0);
+        this._isMounted && this.setState({shouldRenderOverlay: false});
+      }, 700);
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
