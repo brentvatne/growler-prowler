@@ -135,10 +135,7 @@ export default class BreweryListScreen extends React.Component {
       outputRange: ['90deg', '-90deg'],
     });
     return (
-      <View key="navbar" style={[
-        styles.navigationBarContainer,
-        {overflow: 'hidden', paddingTop: Constants.statusBarHeight}
-      ]}>
+      <View key="navbar" style={styles.navigationBarContainer}>
         <View style={styles.navigationBarTitleContainer}>
           <TouchableWithoutFeedback
             hitSlop={{left: 40, top: 30, right: 40, bottom: 10}}
@@ -205,6 +202,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: NavigationBar.DEFAULT_BORDER_BOTTOM_COLOR,
     position: 'absolute',
+    overflow: 'hidden',
+    paddingTop: Constants.statusBarHeight,
     top: 0,
     left: 0,
     right: 0,

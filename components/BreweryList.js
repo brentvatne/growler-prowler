@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Platform,
   ScrollView,
@@ -40,8 +41,15 @@ export default class BreweryList extends React.Component {
     }
   }
 
+  state = {
+    renderContents: false,
+  }
+
   componentDidMount() {
     this.props.setRef && this.props.setRef(this);
+    requestAnimationFrame(() => {
+      this.setState({renderContents: true});
+    });
   }
 
   componentDidUpdate() {
@@ -72,20 +80,32 @@ export default class BreweryList extends React.Component {
           onScrollEndDrag={this.props.onScrollEndDrag}
           onContentSizeChange={this.props.onContentSizeChange}
           scrollEventThrottle={16}>
-          {
-            this.props.breweries.map(brewery => (
-              <BreweryListItem
-                onPress={() => this._handlePressBrewery(brewery) }
-                brewery={brewery}
-                key={brewery.name}
-              />
-            ))
-          }
+          {this._renderContents()}
 
           <StatusBar barStyle="default" />
         </Animated.ScrollView>
       </View>
     );
+  }
+
+  _renderContents() {
+    // This is useful to show *something* while blocking the JS thread to render all list items
+    // Better to just make this ListView at some point
+    if (!this.state.renderContents) {
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 75}}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+    return this.props.breweries.map(brewery => (
+      <BreweryListItem
+        onPress={() => this._handlePressBrewery(brewery) }
+        brewery={brewery}
+        key={brewery.name}
+      />
+    ));
   }
 
   _handlePressBrewery = (brewery) => {
