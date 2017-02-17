@@ -30,6 +30,7 @@ export default class BreweryMapScreen extends React.Component {
         <MapView
           style={styles.map}
           loadingBackgroundColor="#f9f5ed"
+          showsUserLocation
           initialRegion={{
             latitude: 49.28827,
             longitude: -123.0977,

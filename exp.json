@@ -1,18 +1,19 @@
 {
-  "name": "growler-prowler",
+  "name": "Growler Prowler",
   "description": "Find breweries around you in Vancouver!",
   "slug": "growler-prowler",
-  "sdkVersion": "13.0.0",
+  "sdkVersion": "14.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "icon": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+  "privacy": "public",
+  "icon": "./icon.png",
   "notification": {
     "icon": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
     "color": "#000000"
   },
   "loading": {
-    "icon": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+    "icon": "./icon.png",
     "hideExponentText": false
   },
   "packagerOpts": {
