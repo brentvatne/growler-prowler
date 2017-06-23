@@ -1,4 +1,4 @@
 node_modules/**/*
-.exponent/*
+.expo/*
 npm-debug.*
 .DS_Store

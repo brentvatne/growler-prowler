@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {
   Font,
-} from 'exponent';
+} from 'expo';
 
 export class RegularText extends React.Component {
   render() {

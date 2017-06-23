@@ -1,8 +1,8 @@
-import Exponent, { Font } from 'exponent';
+import Expo, { Font } from 'expo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MaterialIcons } from '@exponent/vector-icons';
-import { NavigationProvider, StackNavigation, withNavigation } from '@exponent/ex-navigation';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NavigationProvider, StackNavigation, withNavigation } from '@expo/ex-navigation';
 import { Provider as ReduxProvider, connect } from 'react-redux';
 import { List } from 'immutable';
 
@@ -14,7 +14,7 @@ import Store from './state/Store';
 import { Brewery, User } from './state/Records';
 import AllBreweries from './data';
 
-class AppContainer extends React.Component {
+export default class AppContainer extends React.Component {
   render() {
     return (
       <ReduxProvider store={Store}>
@@ -90,7 +90,7 @@ class App extends React.Component {
 
   render() {
     if (!this.state.assetsReady || !this.state.dataReady) {
-      return <Exponent.Components.AppLoading />;
+      return <Expo.Components.AppLoading />;
     }
 
     return (
@@ -116,5 +116,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-Exponent.registerRootComponent(AppContainer);

@@ -6,8 +6,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
-import { MaterialIcons } from '@exponent/vector-icons';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
+import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
 import Actions from '../state/Actions';

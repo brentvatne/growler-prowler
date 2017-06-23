@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Components } from 'exponent';
+import { Components } from 'expo';
 const { MapView } = Components;
 
 @connect(data => BreweryMapScreen.getDataProps(data))

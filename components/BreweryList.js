@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withNavigation } from '@exponent/ex-navigation';
+import { withNavigation } from '@expo/ex-navigation';
 
 import BreweryListItem from './BreweryListItem';
 

@@ -10,15 +10,15 @@ import {
 } from 'react-native';
 import {
   NavigationBar
-} from '@exponent/ex-navigation';
+} from '@expo/ex-navigation';
 import {
   Constants,
-} from 'exponent';
+} from 'expo';
 import {
   MaterialIcons,
-} from '@exponent/vector-icons';
+} from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import Modal from 'react-native-root-modal';
 
 import Actions from '../state/Actions';

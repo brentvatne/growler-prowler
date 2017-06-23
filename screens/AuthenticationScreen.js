@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Facebook } from 'exponent';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
-import FadeIn from '@exponent/react-native-fade-in-image';
+import { Facebook } from 'expo';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
+import FadeIn from '@expo/react-native-fade-in-image';
 
 import Actions from '../state/Actions';
 import Layout from '../constants/Layout';

@@ -8,8 +8,8 @@ import {
   StackNavigation,
   TabNavigation,
   TabNavigationItem,
-} from '@exponent/ex-navigation';
-import { MaterialIcons } from '@exponent/vector-icons';
+} from '@expo/ex-navigation';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import Router from './Router';

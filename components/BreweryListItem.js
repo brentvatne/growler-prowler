@@ -7,9 +7,9 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import FadeIn from '@exponent/react-native-fade-in-image';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
-import { MaterialIcons } from '@exponent/vector-icons';
+import FadeIn from '@expo/react-native-fade-in-image';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Layout from '../constants/Layout';
 import { RegularText, BoldText } from './StyledText';

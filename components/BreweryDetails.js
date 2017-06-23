@@ -11,14 +11,14 @@ import {
 } from 'react-native';
 import {
   MaterialIcons,
-} from '@exponent/vector-icons';
-import Exponent, {
+} from '@expo/vector-icons';
+import Expo, {
   Components,
-} from 'exponent';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+} from 'expo';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import {
   NavigationBar,
-} from '@exponent/ex-navigation';
+} from '@expo/ex-navigation';
 
 import {
   BoldText,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: NavigationBar.DEFAULT_HEIGHT,
     alignItems: 'center',
-    paddingTop: Exponent.Constants.statusBarHeight,
+    paddingTop: Expo.Constants.statusBarHeight,
     paddingHorizontal: 5,
   },
 });

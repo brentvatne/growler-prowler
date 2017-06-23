@@ -4,9 +4,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
-import ImageGallery from '@exponent/react-native-image-gallery';
-import { MaterialIcons } from '@exponent/vector-icons';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
+import ImageGallery from '@expo/react-native-image-gallery';
+import { MaterialIcons } from '@expo/vector-icons';
 import { RegularText } from './StyledText';
 
 export default class ImageGalleryPortal extends React.Component {

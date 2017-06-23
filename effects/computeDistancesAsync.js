@@ -4,7 +4,7 @@ import {
 import {
   Location,
   Permissions,
-} from 'exponent';
+} from 'expo';
 import geolib from 'geolib';
 
 import Actions from '../state/Actions';
