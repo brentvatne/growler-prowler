@@ -15,10 +15,9 @@ import { connect } from 'react-redux';
 import FadeIn from '@expo/react-native-fade-in-image';
 import ReadMore from '@expo/react-native-read-more-text';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
-import { Components } from 'expo';
+import { MapView } from 'expo';
 import { openImageGallery } from '@expo/react-native-image-gallery';
 import { MaterialIcons } from '@expo/vector-icons';
-const { MapView } = Components;
 
 import Actions from '../state/Actions';
 import {

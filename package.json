@@ -6,7 +6,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "rm -rf node_modules/react-native-root-modal/node_modules"
   },
   "jest": {
     "preset": "jest-expo"
@@ -19,20 +20,21 @@
     "@expo/react-native-touchable-native-feedback-safe": "^1.0.0",
     "@expo/vector-icons": "^4.0.0",
     "days": "^1.0.2",
-    "expo": "^18.0.4",
+    "expo": "^21.0.1",
+    "fbemitter": "^2.1.1",
     "geolib": "^2.0.21",
     "immutable": "^3.8.1",
     "lodash": "^4.16.2",
     "react": "16.0.0-alpha.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.1.tar.gz",
-    "react-native-root-modal": "^1.0.5",
-    "react-navigation": "^1.0.0-beta.11",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.0.tar.gz",
+    "react-native-root-modal": "^1.4.0",
+    "react-native-root-siblings": "brentvatne/react-native-root-siblings",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",
     "time-js": "0.0.5"
   },
   "devDependencies": {
-    "jest-expo": "^18.0.0"
+    "jest-expo": "^21.0.0"
   }
 }

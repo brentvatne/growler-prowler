@@ -90,7 +90,7 @@ class App extends React.Component {
 
   render() {
     if (!this.state.assetsReady || !this.state.dataReady) {
-      return <Expo.Components.AppLoading />;
+      return <Expo.AppLoading />;
     }
 
     return (

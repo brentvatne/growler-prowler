@@ -13,7 +13,7 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 import Expo, {
-  Components,
+  LinearGradient,
 } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import {
@@ -118,7 +118,7 @@ export default class BreweryDetails extends React.Component {
             resizeMode="contain"
           />
           <Animated.View style={[styles.heroBottomGradientContainer, {transform: [{translateY: gradientTranslateY}]}]}>
-            <Components.LinearGradient
+            <LinearGradient
               colors={['transparent', 'rgba(0,0,0,0.07)']}
               style={{width: Layout.window.width, height: 30}}
             />
@@ -179,7 +179,7 @@ export default class BreweryDetails extends React.Component {
 
     return (
       <Animated.View style={[styles.navigationBarShadowContainer, {opacity}]}>
-        <Components.LinearGradient
+        <LinearGradient
           colors={['rgba(0,0,0,0.08)', 'transparent']}
           style={styles.navigationBarShadow}
         />

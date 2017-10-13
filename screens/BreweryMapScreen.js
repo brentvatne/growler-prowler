@@ -5,8 +5,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Components } from 'expo';
-const { MapView } = Components;
+import { MapView } from 'expo';
 
 @connect(data => BreweryMapScreen.getDataProps(data))
 export default class BreweryMapScreen extends React.Component {
