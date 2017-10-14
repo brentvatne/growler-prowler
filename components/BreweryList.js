@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withNavigation } from '@expo/ex-navigation';
+import { withNavigation } from 'react-navigation';
 
 import BreweryListItem from './BreweryListItem';
 
@@ -38,17 +38,17 @@ export default class BreweryList extends React.Component {
 
     return {
       breweries,
-    }
+    };
   }
 
   state = {
     renderContents: false,
-  }
+  };
 
   componentDidMount() {
     this.props.setRef && this.props.setRef(this);
     requestAnimationFrame(() => {
-      this.setState({renderContents: true});
+      this.setState({ renderContents: true });
     });
   }
 
@@ -68,7 +68,9 @@ export default class BreweryList extends React.Component {
     return (
       <View onLayout={this.props.onLayout} style={styles.container}>
         <Animated.ScrollView
-          ref={view => { this._scrollView = view; }}
+          ref={view => {
+            this._scrollView = view;
+          }}
           contentContainerStyle={this.props.contentContainerStyle}
           style={styles.container}
           onScroll={this.props.onScroll}
@@ -93,7 +95,13 @@ export default class BreweryList extends React.Component {
     // Better to just make this ListView at some point
     if (!this.state.renderContents) {
       return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 75}}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 75,
+          }}>
           <ActivityIndicator />
         </View>
       );
@@ -101,16 +109,16 @@ export default class BreweryList extends React.Component {
 
     return this.props.breweries.map(brewery => (
       <BreweryListItem
-        onPress={() => this._handlePressBrewery(brewery) }
+        onPress={() => this._handlePressBrewery(brewery)}
         brewery={brewery}
         key={brewery.name}
       />
     ));
   }
 
-  _handlePressBrewery = (brewery) => {
-    this.props.navigator.push('details', {breweryId: brewery.id});
-  }
+  _handlePressBrewery = brewery => {
+    this.props.navigation.navigate('details', { breweryId: brewery.id });
+  };
 }
 
 const styles = StyleSheet.create({

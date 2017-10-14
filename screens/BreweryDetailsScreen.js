@@ -15,7 +15,7 @@ export default class BreweryDetailsScreen extends React.Component {
   }
 
   static getDataProps(data, props) {
-    let breweryId = props.route.params.breweryId;
+    let breweryId = props.navigation.state.params.breweryId;
     let brewery = data.breweries.all.find(brewery => brewery.id === breweryId);
 
     return {

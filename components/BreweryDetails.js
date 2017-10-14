@@ -16,9 +16,7 @@ import Expo, {
   LinearGradient,
 } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
-import {
-  NavigationBar,
-} from '@expo/ex-navigation';
+import { withNavigation, Header, HeaderBackButton } from 'react-navigation';
 
 import {
   BoldText,
@@ -34,6 +32,7 @@ import {
 import formatTime from '../util/formatTime';
 import Layout from '../constants/Layout';
 
+@withNavigation
 export default class BreweryDetails extends React.Component {
   state = {
     scrollY: new Animated.Value(0),
@@ -141,9 +140,10 @@ export default class BreweryDetails extends React.Component {
     return (
       <Animated.View style={[styles.navigationBar, {backgroundColor: color}]}>
         <View style={[styles.navigationBarAction, {marginLeft: -5}]}>
-          <NavigationBar.BackButton
+          <HeaderBackButton
+            onPress={() => this.props.navigation.goBack()}
             tintColor={accentColor}
-            onPress={() => this.props.navigator.pop() }
+            title={null}
           />
         </View>
 
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   navigationBarShadowContainer: {
     position: 'absolute',
-    top: NavigationBar.DEFAULT_HEIGHT,
+    top: Header.HEIGHT,
     left: 0,
     right: 0,
     height: 15,
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: NavigationBar.DEFAULT_HEIGHT,
+    height: Header.HEIGHT,
     alignItems: 'center',
     paddingTop: Expo.Constants.statusBarHeight,
     paddingHorizontal: 5,

@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { MapView } from 'expo';
 
 @connect(data => BreweryMapScreen.getDataProps(data))
 export default class BreweryMapScreen extends React.Component {
-  static route = {
-    navigationBar: {
-      visible: false,
-    },
-  }
-
   static getDataProps(data) {
     return {
       breweries: data.breweries.all,
@@ -25,7 +16,7 @@ export default class BreweryMapScreen extends React.Component {
     let { breweries } = this.props;
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <MapView
           style={styles.map}
           loadingBackgroundColor="#f9f5ed"
@@ -36,20 +27,18 @@ export default class BreweryMapScreen extends React.Component {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           }}>
-          {
-            this.props.breweries.map(brewery => {
-              let { latitude, longitude, name, isOpen } = brewery;
+          {this.props.breweries.map(brewery => {
+            let { latitude, longitude, name, isOpen } = brewery;
 
-              return (
-                <MapView.Marker
-                  key={name}
-                  pinColor={isOpen ? 'green' : 'red'}
-                  coordinate={{latitude, longitude}}
-                  title={name}
-                />
-              );
-            })
-          }
+            return (
+              <MapView.Marker
+                key={name}
+                pinColor={isOpen ? 'green' : 'red'}
+                coordinate={{ latitude, longitude }}
+                title={name}
+              />
+            );
+          })}
         </MapView>
       </View>
     );

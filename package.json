@@ -13,9 +13,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/ex-navigation": "^3.0.0",
     "@expo/react-native-fade-in-image": "^1.0.0",
-    "@expo/react-native-image-gallery": "^1.0.4",
+    "@expo/react-native-image-gallery": "2.0.1",
     "@expo/react-native-read-more-text": "^1.0.0",
     "@expo/react-native-touchable-native-feedback-safe": "^1.0.0",
     "@expo/vector-icons": "^4.0.0",
@@ -29,6 +28,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.0.tar.gz",
     "react-native-root-modal": "^1.4.0",
     "react-native-root-siblings": "brentvatne/react-native-root-siblings",
+    "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  Image,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Alert, Image, Platform, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Facebook } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
@@ -18,18 +12,12 @@ import { User } from '../state/Records';
 
 @connect()
 export default class AuthenticationScreen extends React.Component {
-  static route = {
-    navigationBar: {
-      visible: false,
-    },
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <FadeIn placeholderStyle={{backgroundColor: 'transparent'}}>
+        <FadeIn placeholderStyle={{ backgroundColor: 'transparent' }}>
           <Image
-            style={{width: 150, height: 244, marginBottom: 30,}}
+            style={{ width: 150, height: 244, marginBottom: 30 }}
             source={require('../assets/images/logo.png')}
           />
         </FadeIn>
@@ -53,27 +41,36 @@ export default class AuthenticationScreen extends React.Component {
   }
 
   _signInWithFacebook = async () => {
-    const result = await Facebook.logInWithReadPermissionsAsync('1615553262072011', {
-      permissions: ['public_profile'],
-      behavior: Platform.OS === 'ios' ? 'web' : 'system',
-    });
+    const result = await Facebook.logInWithReadPermissionsAsync(
+      '1615553262072011',
+      {
+        permissions: ['public_profile'],
+        behavior: Platform.OS === 'ios' ? 'web' : 'system',
+      }
+    );
 
     if (result.type === 'success') {
-      let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}`);
+      let response = await fetch(
+        `https://graph.facebook.com/me?access_token=${result.token}`
+      );
       let info = await response.json();
 
-      this.props.dispatch(Actions.signIn(new User({
-        id: info.id,
-        authToken: result.token,
-        name: info.name,
-        isGuest: false,
-      })));
+      this.props.dispatch(
+        Actions.signIn(
+          new User({
+            id: info.id,
+            authToken: result.token,
+            name: info.name,
+            isGuest: false,
+          })
+        )
+      );
     }
-  }
+  };
 
   _continueAsGuest = () => {
-    this.props.dispatch(Actions.signIn(new User({isGuest: true})));
-  }
+    this.props.dispatch(Actions.signIn(new User({ isGuest: true })));
+  };
 }
 
 const styles = StyleSheet.create({
