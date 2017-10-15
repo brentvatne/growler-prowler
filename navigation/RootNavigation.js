@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import { capitalize } from 'lodash';
@@ -9,6 +10,7 @@ import BreweryDetailsScreen from '../screens/BreweryDetailsScreen';
 import BreweryListScreen from '../screens/BreweryListScreen';
 import BreweryMapScreen from '../screens/BreweryMapScreen';
 import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const ListStack = StackNavigator(
@@ -37,8 +39,16 @@ const SettingsStack = StackNavigator(
   {
     navigationOptions: {
       title: 'Settings',
+      headerTitleStyle: {
+        fontFamily: 'OpenSans-Bold',
+        fontSize: 17,
+        letterSpacing: -0.5,
+        fontWeight: Platform.OS === 'android' ? '400' : 'normal',
+      },
       headerStyle: {
         backgroundColor: '#fff',
+        height: Layout.HEADER_HEIGHT,
+        paddingTop: Constants.statusBarHeight,
       },
     },
   }
@@ -84,7 +94,7 @@ const TabLayout = TabNavigator(
         return (
           <Ionicons
             name={iconName}
-            size={30}
+            size={Platform.OS === 'ios' ? 30 : 27}
             style={{ marginBottom: -3 }}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
           />

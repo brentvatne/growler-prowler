@@ -56,8 +56,11 @@ export default class BreweryList extends React.Component {
     this.props.setRef && this.props.setRef(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.breweries !== this.props.breweries;
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.breweries !== this.props.breweries ||
+      nextState.renderContents !== this.state.renderContents
+    );
   }
 
   scrollTo(opts) {

@@ -15,12 +15,6 @@ import { RegularText, BoldText } from '../components/StyledText';
 
 @connect(data => SettingsScreen.getDataProps(data))
 export default class SettingsScreen extends React.Component {
-  static route = {
-    navigationBar: {
-      title: 'Options',
-    },
-  }
-
   static getDataProps(data) {
     return {
       currentUser: data.currentUser,

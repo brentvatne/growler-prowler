@@ -47,7 +47,7 @@ export default class BreweryListScreen extends React.Component {
       setRef: view => {
         this._list = view;
       },
-      contentContainerStyle: { paddingTop: Header.HEIGHT },
+      contentContainerStyle: { paddingTop: Layout.HEADER_HEIGHT },
     };
 
     return (
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   navigationBarContainer: {
     backgroundColor: '#fff',
-    height: Header.HEIGHT,
+    height: Layout.HEADER_HEIGHT,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     position: 'absolute',
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   menuModal: {
     ...StyleSheet.absoluteFillObject,
-    top: Header.HEIGHT,
+    top: Layout.HEADER_HEIGHT,
     backgroundColor: 'transparent',
     overflow: 'hidden',
   },

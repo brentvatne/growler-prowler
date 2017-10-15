@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@expo/react-native-fade-in-image": "^1.0.0",
-    "@expo/react-native-image-gallery": "2.0.1",
+    "@expo/react-native-image-gallery": "2.0.2",
     "@expo/react-native-read-more-text": "^1.0.0",
     "@expo/react-native-touchable-native-feedback-safe": "^1.0.0",
     "@expo/vector-icons": "^4.0.0",

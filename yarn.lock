@@ -10,9 +10,9 @@
     react-mixin "^3.0.5"
     react-timer-mixin "^0.13.3"
 
-"@expo/react-native-image-gallery@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@expo/react-native-image-gallery/-/react-native-image-gallery-2.0.1.tgz#6857c70fc61a0df07ed5e303878cfd197958272b"
+"@expo/react-native-image-gallery@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-image-gallery/-/react-native-image-gallery-2.0.2.tgz#ea5f1dae20442c4cae6b75c0bd6bea4ce977f8be"
   dependencies:
     immutable "^3.8.1"
     mirror-creator "^1.1.0"

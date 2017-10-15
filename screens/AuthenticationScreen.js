@@ -21,20 +21,20 @@ export default class AuthenticationScreen extends React.Component {
             source={require('../assets/images/logo.png')}
           />
         </FadeIn>
-        <TouchableNativeFeedback onPress={this._signInWithFacebook}>
-          <View style={styles.facebookButton}>
-            <RegularText style={styles.facebookButtonText}>
-              Sign in with Facebook
-            </RegularText>
-          </View>
+        <TouchableNativeFeedback
+          onPress={this._signInWithFacebook}
+          style={styles.facebookButton}>
+          <RegularText style={styles.facebookButtonText}>
+            Sign in with Facebook
+          </RegularText>
         </TouchableNativeFeedback>
 
-        <TouchableNativeFeedback onPress={this._continueAsGuest}>
-          <View style={styles.guestButton}>
-            <RegularText style={styles.guestButtonText}>
-              Continue as a guest
-            </RegularText>
-          </View>
+        <TouchableNativeFeedback
+          onPress={this._continueAsGuest}
+          style={styles.guestButton}>
+          <RegularText style={styles.guestButtonText}>
+            Continue as a guest
+          </RegularText>
         </TouchableNativeFeedback>
       </View>
     );

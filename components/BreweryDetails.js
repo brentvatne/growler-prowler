@@ -12,7 +12,8 @@ import {
 import {
   MaterialIcons,
 } from '@expo/vector-icons';
-import Expo, {
+import {
+  Constants,
   LinearGradient,
 } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
   },
   navigationBarShadowContainer: {
     position: 'absolute',
-    top: Header.HEIGHT,
+    top: Layout.HEADER_HEIGHT,
     left: 0,
     right: 0,
     height: 15,
@@ -345,9 +346,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: Header.HEIGHT,
+    height: Layout.HEADER_HEIGHT,
     alignItems: 'center',
-    paddingTop: Expo.Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 5,
   },
 });
