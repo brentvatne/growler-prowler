@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import FadeIn from '@expo/react-native-fade-in-image';
+import FadeIn from 'react-native-fade-in-image';
 import ReadMore from '@expo/react-native-read-more-text';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import { MapView } from 'expo';

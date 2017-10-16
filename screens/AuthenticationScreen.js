@@ -3,7 +3,7 @@ import { Alert, Image, Platform, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Facebook } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
-import FadeIn from '@expo/react-native-fade-in-image';
+import FadeIn from 'react-native-fade-in-image';
 
 import Actions from '../state/Actions';
 import Layout from '../constants/Layout';
@@ -17,7 +17,12 @@ export default class AuthenticationScreen extends React.Component {
       <View style={styles.container}>
         <FadeIn placeholderStyle={{ backgroundColor: 'transparent' }}>
           <Image
-            style={{ width: 150, height: 244, marginBottom: 30 }}
+            style={{
+              width: 150,
+              height: 244,
+              marginBottom: 30,
+              resizeMode: 'contain'
+            }}
             source={require('../assets/images/logo.png')}
           />
         </FadeIn>
