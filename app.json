@@ -6,19 +6,16 @@
     "sdkVersion": "21.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
+    "primaryColor": "#f6bd94",
     "privacy": "public",
     "icon": "./icon.png",
-    "notification": {
-      "icon": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
-      "color": "#000000"
+    "splash": {
+      "backgroundColor": "#f6bd94",
+      "image": "./splash.png",
+      "resizeMode": "contain"
     },
     "loading": {
-      "icon": "./icon.png",
-      "hideExponentText": false
-    },
-    "packagerOpts": {
-      "assetExts": ["ttf", "mp4"]
+      "icon": "./icon.png"
     },
     "android": {
       "package": "ca.brentvatne.growlerprowler",
@@ -27,6 +24,9 @@
           "apiKey": "AIzaSyCp-BUoX8B8699rkbnb2P2CK4gXSeesVcc"
         }
       }
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
     }
   }
 }
