@@ -1,7 +1,7 @@
 import Expo, { Font } from 'expo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { Provider as ReduxProvider, connect } from 'react-redux';
 import { List } from 'immutable';
 
@@ -37,10 +37,10 @@ class App extends React.Component {
   };
 
   _loadAssetsAsync = async () => {
-    await Font.loadAsync({
-      ...MaterialIcons.font,
+    return Font.loadAsync({
+      ...Ionicons.font,
       'OpenSans-Light': require('./assets/fonts/OpenSans-Light.ttf'),
-      OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+      'OpenSans': require('./assets/fonts/OpenSans-Regular.ttf'),
       'OpenSans-Bold': require('./assets/fonts/OpenSans-Semibold.ttf'),
     });
   };
@@ -65,6 +65,7 @@ class App extends React.Component {
       return (
         <Expo.AppLoading
           startAsync={this._loadDataAndAssetsAsync}
+          onError={e => console.error(e)}
           onFinish={() => {
             this.setState({
               isReady: true,

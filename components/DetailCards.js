@@ -20,10 +20,7 @@ import { openImageGallery } from '@expo/react-native-image-gallery';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import Actions from '../state/Actions';
-import {
-  RegularText,
-  BoldText,
-} from './StyledText';
+import { RegularText, BoldText } from './StyledText';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 
@@ -34,9 +31,7 @@ export class DescriptionCard extends React.Component {
     return (
       <View>
         <View style={styles.cardLabel}>
-          <BoldText style={styles.cardLabelText}>
-            Description
-          </BoldText>
+          <BoldText style={styles.cardLabelText}>Description</BoldText>
         </View>
 
         <View style={styles.card}>
@@ -45,9 +40,7 @@ export class DescriptionCard extends React.Component {
               numberOfLines={6}
               renderTruncatedFooter={this._renderTruncatedFooter}
               renderRevealedFooter={this._renderRevealedFooter}>
-              <RegularText style={styles.cardText}>
-                {text}
-              </RegularText>
+              <RegularText style={styles.cardText}>{text}</RegularText>
             </ReadMore>
           </View>
         </View>
@@ -55,21 +48,25 @@ export class DescriptionCard extends React.Component {
     );
   }
 
-  _renderTruncatedFooter = (handlePress) => {
+  _renderTruncatedFooter = handlePress => {
     return (
-      <RegularText style={{color: Colors.tintColor, marginTop: 5}} onPress={handlePress}>
+      <RegularText
+        style={{ color: Colors.tintColor, marginTop: 5 }}
+        onPress={handlePress}>
         Read more
       </RegularText>
     );
-  }
+  };
 
-  _renderRevealedFooter = (handlePress) => {
+  _renderRevealedFooter = handlePress => {
     return (
-      <RegularText style={{color: Colors.tintColor, marginTop: 5}} onPress={handlePress}>
+      <RegularText
+        style={{ color: Colors.tintColor, marginTop: 5 }}
+        onPress={handlePress}>
         Show less
       </RegularText>
     );
-  }
+  };
 }
 
 export class SummaryCard extends React.Component {
@@ -83,9 +80,7 @@ export class SummaryCard extends React.Component {
     return (
       <View style={[styles.card, styles.summaryContainer]}>
         <View style={styles.cardBody}>
-          <RegularText style={styles.cardText}>
-            {text}
-          </RegularText>
+          <RegularText style={styles.cardText}>{text}</RegularText>
         </View>
       </View>
     );
@@ -95,7 +90,7 @@ export class SummaryCard extends React.Component {
 export class InstagramPhotosCard extends React.Component {
   state = {
     images: null,
-  }
+  };
 
   async componentDidMount() {
     this._isMounted = true;
@@ -111,7 +106,7 @@ export class InstagramPhotosCard extends React.Component {
           height: item.images.standard_resolution.height,
           description: item.caption && item.caption.text,
         }));
-        this.setState({images: images.slice(0, 6)});
+        this.setState({ images: images.slice(0, 6) });
       }
     }
   }
@@ -147,7 +142,9 @@ export class InstagramPhotosCard extends React.Component {
     return (
       <View style={styles.card}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          { images.map((image, i) => <InstagramPhoto key={i} item={image} list={images} />) }
+          {images.map((image, i) => (
+            <InstagramPhoto key={i} item={image} list={images} />
+          ))}
         </ScrollView>
       </View>
     );
@@ -155,7 +152,6 @@ export class InstagramPhotosCard extends React.Component {
 }
 
 class InstagramPhoto extends React.Component {
-
   render() {
     let { item } = this.props;
 
@@ -164,8 +160,10 @@ class InstagramPhoto extends React.Component {
         <View>
           <FadeIn>
             <Image
-              ref={view => { this._view = view; }}
-              source={{uri: item.imageUrl}}
+              ref={view => {
+                this._view = view;
+              }}
+              source={{ uri: item.imageUrl }}
               resizeMode="cover"
               style={styles.instagramImage}
             />
@@ -180,27 +178,27 @@ class InstagramPhoto extends React.Component {
 
     this._view.measure((rx, ry, w, h, x, y) => {
       openImageGallery({
-        animationMeasurements: {w, h, x, y},
+        animationMeasurements: { w, h, x, y },
         list,
         item,
       });
     });
-  }
+  };
 }
 
 export class MapCard extends React.Component {
   state = {
     shouldRenderMap: false,
     shouldRenderOverlay: true,
-  }
+  };
 
   componentDidMount() {
     this._isMounted = true;
 
     InteractionManager.runAfterInteractions(() => {
-      this._isMounted && this.setState({shouldRenderMap: true});
+      this._isMounted && this.setState({ shouldRenderMap: true });
       setTimeout(() => {
-        this._isMounted && this.setState({shouldRenderOverlay: false});
+        this._isMounted && this.setState({ shouldRenderOverlay: false });
       }, 700);
     });
   }
@@ -210,12 +208,7 @@ export class MapCard extends React.Component {
   }
 
   render() {
-    let {
-      address,
-      city,
-      postalCode,
-      name,
-    } = this.props.brewery;
+    let { address, city, postalCode, name } = this.props.brewery;
 
     return (
       <View style={[styles.card, styles.mapContainer]}>
@@ -246,9 +239,22 @@ export class MapCard extends React.Component {
     }
 
     if (this.state.shouldRenderMap) {
-      return <View style={[styles.map, {backgroundColor: '#f9f5ed', position: 'absolute', top: 0, left: 0, right: 0}]} />
+      return (
+        <View
+          style={[
+            styles.map,
+            {
+              backgroundColor: '#f9f5ed',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+            },
+          ]}
+        />
+      );
     } else {
-      return <View style={[styles.map, {backgroundColor: '#f9f5ed'}]} />
+      return <View style={[styles.map, { backgroundColor: '#f9f5ed' }]} />;
     }
   }
 
@@ -257,11 +263,7 @@ export class MapCard extends React.Component {
       return;
     }
 
-    let {
-      name,
-      latitude,
-      longitude,
-    } = this.props.brewery;
+    let { name, latitude, longitude } = this.props.brewery;
 
     return (
       <MapView
@@ -275,10 +277,7 @@ export class MapCard extends React.Component {
           latitudeDelta: 0.003,
           longitudeDelta: 0.003,
         }}>
-        <MapView.Marker
-          coordinate={{latitude, longitude}}
-          title={name}
-        />
+        <MapView.Marker coordinate={{ latitude, longitude }} title={name} />
       </MapView>
     );
   }
@@ -292,7 +291,7 @@ export class VisitedCard extends React.Component {
 
     return {
       isVisited,
-    }
+    };
   }
 
   _onToggleVisited = () => {
@@ -301,31 +300,35 @@ export class VisitedCard extends React.Component {
     } else {
       this.props.dispatch(Actions.addVisitedBrewery(this.props.breweryId));
     }
-  }
+  };
 
   render() {
-    let {
-      isVisited,
-    } = this.props;
+    let { isVisited } = this.props;
 
     return (
-      <View style={{marginTop: 15}}>
+      <View style={{ marginTop: 15 }}>
         <View style={styles.card}>
           <TouchableNativeFeedback
             onPress={this._onToggleVisited}
             fallback={TouchableHighlight}
             underlayColor="#eee">
             <View style={[styles.cardBody, styles.visitedCardBody]}>
-              <View style={{flex: 1}}>
-                <RegularText style={[styles.visitedCardText, {opacity: isVisited ? 1 : 0.7}]}>
-                  { isVisited ? "You've been here" : "You still need to check this one out" }
+              <View style={{ flex: 1 }}>
+                <RegularText
+                  style={[
+                    styles.visitedCardText,
+                    { opacity: isVisited ? 1 : 0.7 },
+                  ]}>
+                  {isVisited
+                    ? "You've been here"
+                    : 'You still need to check this one out'}
                 </RegularText>
               </View>
 
               <MaterialIcons
-                name={isVisited ? "check-box" : "check-box-outline-blank"}
+                name={isVisited ? 'check-box' : 'check-box-outline-blank'}
                 size={25}
-                style={{opacity: isVisited ? 1 : 0.5}}
+                style={{ opacity: isVisited ? 1 : 0.5 }}
               />
             </View>
           </TouchableNativeFeedback>
