@@ -37,7 +37,9 @@ export default class BreweryListScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(Actions.computeDistances());
+    requestAnimationFrame(() => {
+      this.props.dispatch(Actions.computeDistances());
+    });
   }
 
   render() {

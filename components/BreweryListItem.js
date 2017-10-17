@@ -16,16 +16,12 @@ import { RegularText, BoldText } from './StyledText';
 import formatTime from '../util/formatTime';
 
 export default class BreweryListItem extends React.Component {
-
   shouldComponentUpdate(nextProps) {
     return nextProps.brewery !== this.props.brewery;
   }
 
   render() {
-    let {
-      smallLogo,
-      name,
-    } = this.props.brewery;
+    let { smallLogo, name } = this.props.brewery;
 
     return (
       <TouchableNativeFeedback
@@ -36,19 +32,21 @@ export default class BreweryListItem extends React.Component {
         fallback={TouchableHighlight}
         underlayColor="#ccc">
         <View style={styles.logoContainer}>
-          <FadeIn placeholderStyle={{backgroundColor: Platform.OS === 'android' ? 'transparent' : '#eee'}}>
+          <FadeIn
+            placeholderStyle={{
+              backgroundColor:
+                Platform.OS === 'android' ? 'transparent' : '#eee',
+            }}>
             <Image
               resizeMode="contain"
-              source={{uri: smallLogo}}
+              source={{ uri: smallLogo }}
               style={styles.logo}
             />
           </FadeIn>
         </View>
 
         <View style={styles.infoContainer}>
-          <RegularText style={styles.name}>
-            {name}
-          </RegularText>
+          <RegularText style={styles.name}>{name}</RegularText>
 
           <RegularText style={styles.hours}>
             {this._renderHoursText()}
@@ -67,30 +65,24 @@ export default class BreweryListItem extends React.Component {
   }
 
   _renderHoursText() {
-    let {
-      isOpen,
-      openingTimeToday,
-      closingTimeToday,
-    } = this.props.brewery;
+    let { isOpen, openingTimeToday, closingTimeToday } = this.props.brewery;
 
     if (openingTimeToday && closingTimeToday) {
-      return `${formatTime(openingTimeToday)} - ${formatTime(closingTimeToday)} (${isOpen ? 'Open' : 'Closed'})`
+      return `${formatTime(openingTimeToday)} - ${formatTime(
+        closingTimeToday
+      )} (${isOpen ? 'Open' : 'Closed'})`;
     } else {
       return 'Hours not available';
     }
   }
 
   _renderAddressText() {
-    let {
-      address,
-      distance,
-      direction,
-    } = this.props.brewery;
+    let { address, distance, direction } = this.props.brewery;
 
     let addressText = address;
 
     if (distance) {
-      addressText = `${distance} ${direction.exact} - ${addressText}`
+      addressText = `${distance} ${direction.exact} - ${addressText}`;
     }
 
     return addressText;

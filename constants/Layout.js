@@ -7,7 +7,8 @@ export default {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  HEADER_HEIGHT: Platform.OS === 'android'
+  HEADER_HEIGHT:
+    Platform.OS === 'android'
       ? Header.HEIGHT + Constants.statusBarHeight
       : Header.HEIGHT,
 };

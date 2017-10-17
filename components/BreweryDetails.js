@@ -9,20 +9,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {
-  MaterialIcons,
-} from '@expo/vector-icons';
-import {
-  Constants,
-  LinearGradient,
-} from 'expo';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Constants, LinearGradient } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import { withNavigation, Header, HeaderBackButton } from 'react-navigation';
 
-import {
-  BoldText,
-  RegularText,
-} from './StyledText';
+import { BoldText, RegularText } from './StyledText';
 import {
   MapCard,
   DescriptionCard,
@@ -37,7 +29,7 @@ import Layout from '../constants/Layout';
 export default class BreweryDetails extends React.Component {
   state = {
     scrollY: new Animated.Value(0),
-  }
+  };
 
   render() {
     let { brewery } = this.props;
@@ -45,7 +37,7 @@ export default class BreweryDetails extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={{flex: 1, marginTop: -50}}>
+        <View style={{ flex: 1, marginTop: -50 }}>
           {this._renderHeroHeader()}
 
           <Animated.ScrollView
@@ -58,7 +50,10 @@ export default class BreweryDetails extends React.Component {
             <View style={styles.heroSpacer} />
 
             <View style={styles.contentContainerStyle}>
-              <MapCard brewery={brewery} onPress={this._handlePressDirections} />
+              <MapCard
+                brewery={brewery}
+                onPress={this._handlePressDirections}
+              />
               <SummaryCard text={brewery.summary} />
               <DescriptionCard text={brewery.description} />
               <InstagramPhotosCard profile={brewery.instagram} />
@@ -105,22 +100,39 @@ export default class BreweryDetails extends React.Component {
     });
     return (
       <View>
-        <Animated.View style={[
-          styles.heroBackground,
-          { backgroundColor: brewery.color,
-            transform: [{translateY: heroBackgroundTranslateY}] }]}
-         />
+        <Animated.View
+          style={[
+            styles.heroBackground,
+            {
+              backgroundColor: brewery.color,
+              transform: [{ translateY: heroBackgroundTranslateY }],
+            },
+          ]}
+        />
 
         <View style={styles.hero}>
           <Animated.Image
-            source={{uri: brewery.logo}}
-            style={[styles.heroImage, {opacity: logoOpacity, transform: [{scale: logoScale}, {translateY: logoTranslateY}]}]}
+            source={{ uri: brewery.logo }}
+            style={[
+              styles.heroImage,
+              {
+                opacity: logoOpacity,
+                transform: [
+                  { scale: logoScale },
+                  { translateY: logoTranslateY },
+                ],
+              },
+            ]}
             resizeMode="contain"
           />
-          <Animated.View style={[styles.heroBottomGradientContainer, {transform: [{translateY: gradientTranslateY}]}]}>
+          <Animated.View
+            style={[
+              styles.heroBottomGradientContainer,
+              { transform: [{ translateY: gradientTranslateY }] },
+            ]}>
             <LinearGradient
               colors={['transparent', 'rgba(0,0,0,0.07)']}
-              style={{width: Layout.window.width, height: 30}}
+              style={{ width: Layout.window.width, height: 30 }}
             />
           </Animated.View>
         </View>
@@ -129,18 +141,13 @@ export default class BreweryDetails extends React.Component {
   }
 
   _renderNavigationBar() {
-    let {
-      color,
-      accentColor,
-    } = this.props.brewery;
+    let { color, accentColor } = this.props.brewery;
 
-    let {
-      scrollY,
-    } = this.state;
+    let { scrollY } = this.state;
 
     return (
-      <Animated.View style={[styles.navigationBar, {backgroundColor: color}]}>
-        <View style={[styles.navigationBarAction, {marginLeft: -5}]}>
+      <Animated.View style={[styles.navigationBar, { backgroundColor: color }]}>
+        <View style={[styles.navigationBarAction, { marginLeft: -5 }]}>
           <HeaderBackButton
             onPress={() => this.props.navigation.goBack()}
             tintColor={accentColor}
@@ -154,11 +161,7 @@ export default class BreweryDetails extends React.Component {
 
         <View style={styles.navigationBarAction}>
           <TouchableNativeFeedback onPress={this._handlePressDirections}>
-            <MaterialIcons
-              name="directions"
-              size={25}
-              color={accentColor}
-            />
+            <MaterialIcons name="directions" size={25} color={accentColor} />
           </TouchableNativeFeedback>
         </View>
       </Animated.View>
@@ -169,9 +172,7 @@ export default class BreweryDetails extends React.Component {
   // animations, because the prop isn't whitelisted. So we can use
   // LinearGradient instead
   _renderNavigationBarShadow() {
-    let {
-      scrollY,
-    } = this.state;
+    let { scrollY } = this.state;
 
     let opacity = scrollY.interpolate({
       inputRange: [0, 50, 300, 301],
@@ -179,7 +180,7 @@ export default class BreweryDetails extends React.Component {
     });
 
     return (
-      <Animated.View style={[styles.navigationBarShadowContainer, {opacity}]}>
+      <Animated.View style={[styles.navigationBarShadowContainer, { opacity }]}>
         <LinearGradient
           colors={['rgba(0,0,0,0.08)', 'transparent']}
           style={styles.navigationBarShadow}
@@ -234,13 +235,26 @@ export default class BreweryDetails extends React.Component {
 
     return (
       <View>
-        <Animated.View style={{opacity: titleOpacity, transform: [{translateY: titleTranslateY}]}}>
-          <BoldText style={[styles.navigationBarTitleText, {color: accentColor}]}>
+        <Animated.View
+          style={{
+            opacity: titleOpacity,
+            transform: [{ translateY: titleTranslateY }],
+          }}>
+          <BoldText
+            style={[styles.navigationBarTitleText, { color: accentColor }]}>
             {name}
           </BoldText>
         </Animated.View>
-        <Animated.View style={{backgroundColor: 'transparent', transform: [{scale: subtitleScale}, {translateY: subtitleTranslateY}]}}>
-          <BoldText style={[styles.navigationBarTitleText, {color: accentColor}]}>
+        <Animated.View
+          style={{
+            backgroundColor: 'transparent',
+            transform: [
+              { scale: subtitleScale },
+              { translateY: subtitleTranslateY },
+            ],
+          }}>
+          <BoldText
+            style={[styles.navigationBarTitleText, { color: accentColor }]}>
             {text}
           </BoldText>
         </Animated.View>
@@ -249,11 +263,7 @@ export default class BreweryDetails extends React.Component {
   }
 
   _handlePressDirections = () => {
-    let {
-      address,
-      postalCode,
-      city,
-    } = this.props.brewery;
+    let { address, postalCode, city } = this.props.brewery;
 
     let daddr = encodeURIComponent(`${address} ${postalCode}, ${city}`);
 
@@ -262,7 +272,7 @@ export default class BreweryDetails extends React.Component {
     } else {
       Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
     }
-  }
+  };
 }
 
 function getBarStyle(color) {

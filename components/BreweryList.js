@@ -47,9 +47,9 @@ export default class BreweryList extends React.Component {
 
   componentDidMount() {
     this.props.setRef && this.props.setRef(this);
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       this.setState({ renderContents: true });
-    });
+    }, 100);
   }
 
   componentDidUpdate() {

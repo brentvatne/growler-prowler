@@ -14,16 +14,17 @@
       "image": "./splash.png",
       "resizeMode": "contain"
     },
-    "loading": {
-      "icon": "./icon.png"
-    },
     "android": {
-      "package": "ca.brentvatne.growlerprowler",
+      "icon": "./icon-android.png",
+      "package": "xyz.bront.growlerprowler",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCp-BUoX8B8699rkbnb2P2CK4gXSeesVcc"
         }
       }
+    },
+    "ios": {
+      "bundleIdentifier": "xyz.bront.growlerprowler"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]

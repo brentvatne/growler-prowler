@@ -21,7 +21,7 @@ export default class AuthenticationScreen extends React.Component {
               width: 150,
               height: 244,
               marginBottom: 30,
-              resizeMode: 'contain'
+              resizeMode: 'contain',
             }}
             source={require('../assets/images/logo.png')}
           />
