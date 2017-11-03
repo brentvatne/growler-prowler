@@ -15,17 +15,15 @@ export default class AuthenticationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <FadeIn placeholderStyle={{ backgroundColor: 'transparent' }}>
-          <Image
-            style={{
-              width: 150,
-              height: 244,
-              marginBottom: 30,
-              resizeMode: 'contain',
-            }}
-            source={require('../assets/images/logo.png')}
-          />
-        </FadeIn>
+        <Image
+          style={{
+            width: 100,
+            height: 200,
+            marginBottom: 30,
+          }}
+          resizeMode="contain"
+          source={require('../assets/images/logo.png')}
+        />
         <TouchableNativeFeedback
           onPress={this._signInWithFacebook}
           style={styles.facebookButton}>

@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
 
 const Keys = {
-  User: 'GrowlerUser',
-  VisitedBreweries: 'GrowlerVisited',
+  User: 'User',
+  VisitedBreweries: 'Visited',
 };
 
 async function getUserAsync() {

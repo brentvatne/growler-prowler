@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   Animated,
+  FlatList,
   Platform,
   ScrollView,
   StatusBar,
@@ -70,53 +71,41 @@ export default class BreweryList extends React.Component {
   render() {
     return (
       <View onLayout={this.props.onLayout} style={styles.container}>
-        <Animated.ScrollView
-          ref={view => {
-            this._scrollView = view;
-          }}
-          contentContainerStyle={this.props.contentContainerStyle}
-          style={styles.container}
-          onScroll={this.props.onScroll}
-          onResponderRelease={this.props.onMomentumScrollEnd}
-          onResponderTerminate={this.props.onMomentumScrollEnd}
-          onMomentumScrollBegin={this.props.onMomentumScrollBegin}
-          onMomentumScrollEnd={this.props.onMomentumScrollEnd}
-          onScrollBeginDrag={this.props.onScrollBeginDrag}
-          onScrollEndDrag={this.props.onScrollEndDrag}
-          onContentSizeChange={this.props.onContentSizeChange}
-          scrollEventThrottle={16}>
-          {this._renderContents()}
+        {this.state.renderContents ? (
+          <FlatList
+            ref={view => {
+              this._scrollView = view;
+            }}
+            contentContainerStyle={this.props.contentContainerStyle}
+            renderItem={this._renderItem}
+            style={styles.container}
+            data={this.props.breweries.toJS()}
+            keyExtractor={item => item.name}
+          />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 75,
+            }}>
+            <ActivityIndicator />
+          </View>
+        )}
 
-          <StatusBar barStyle="default" />
-        </Animated.ScrollView>
+        <StatusBar barStyle="default" />
       </View>
     );
   }
 
-  _renderContents() {
-    // This is useful to show *something* while blocking the JS thread to render all list items
-    // Better to just make this ListView at some point
-    if (!this.state.renderContents) {
-      return (
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 75,
-          }}>
-          <ActivityIndicator />
-        </View>
-      );
-    }
-
-    return this.props.breweries.map(brewery => (
+  _renderItem = ({ item }) => {
+    return (
       <BreweryListItem
-        onPress={() => this._handlePressBrewery(brewery)}
-        brewery={brewery}
-        key={brewery.name}
+        onPress={() => this._handlePressBrewery(item)}
+        brewery={item}
       />
-    ));
+    );
   }
 
   _handlePressBrewery = brewery => {

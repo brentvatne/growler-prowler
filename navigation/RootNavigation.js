@@ -47,8 +47,6 @@ const SettingsStack = StackNavigator(
       },
       headerStyle: {
         backgroundColor: '#fff',
-        height: Layout.HEADER_HEIGHT,
-        paddingTop: Constants.statusBarHeight,
       },
     },
   }

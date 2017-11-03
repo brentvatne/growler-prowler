@@ -3,7 +3,7 @@
     "name": "Growler Prowler",
     "description": "Find breweries around you in Vancouver!",
     "slug": "growler-prowler",
-    "sdkVersion": "21.0.0",
+    "sdkVersion": "22.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#f6bd94",
@@ -16,15 +16,15 @@
     },
     "android": {
       "icon": "./icon-android.png",
-      "package": "xyz.bront.growlerprowler",
+      "package": "xyz.bront.coldone",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyCp-BUoX8B8699rkbnb2P2CK4gXSeesVcc"
+          "apiKey": "AIzaSyD6TAyiTkI3nULh6-JhZJqRxJ0S734dw6E"
         }
       }
     },
     "ios": {
-      "bundleIdentifier": "xyz.bront.growlerprowler"
+      "bundleIdentifier": "xyz.bront.coldone"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]

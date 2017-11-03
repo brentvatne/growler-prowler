@@ -14,7 +14,7 @@ export default class ImageGalleryPortal extends React.Component {
     return (
       <ImageGallery
         renderHeaderRight={(onPress) => (
-          <TouchableNativeFeedback onPress={onPress} hitSlop={{top: 20, right: 20, left: 20, bottom: 20}}>
+          <TouchableNativeFeedback onPress={onPress} hitSlop={{top: 20, right: 20, left: 20 }}>
             <MaterialIcons name="close" size={20} color="rgba(0,0,0,0.9)" />
           </TouchableNativeFeedback>
         )}

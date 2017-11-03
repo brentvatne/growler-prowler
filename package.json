@@ -1,8 +1,4 @@
 {
-  "name": "growler-prowler",
-  "version": "0.0.0",
-  "description": "",
-  "author": "support@expo.io",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
@@ -13,28 +9,28 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/react-native-image-gallery": "2.0.2",
+    "@expo/react-native-image-gallery": "^2.2.0",
     "@expo/react-native-read-more-text": "^1.0.0",
     "@expo/react-native-touchable-native-feedback-safe": "^1.0.0",
     "@expo/vector-icons": "^4.0.0",
     "days": "^1.0.2",
-    "expo": "^21.0.1",
+    "expo": "^22.0.2",
     "fbemitter": "^2.1.1",
     "geolib": "^2.0.21",
     "immutable": "^3.8.1",
     "lodash": "^4.16.2",
-    "react": "16.0.0-alpha.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.0.tar.gz",
+    "react": "16.0.0-beta.5",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.2.tar.gz",
     "react-native-fade-in-image": "^1.2.0",
     "react-native-root-modal": "^1.4.0",
     "react-native-root-siblings": "brentvatne/react-native-root-siblings",
-    "react-navigation": "^1.0.0-beta.13",
+    "react-navigation": "1.0.0-beta.18",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",
     "time-js": "0.0.5"
   },
   "devDependencies": {
-    "jest-expo": "^21.0.0"
+    "jest-expo": "^22.0.0"
   }
 }
