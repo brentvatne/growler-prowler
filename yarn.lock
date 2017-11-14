@@ -3622,24 +3622,18 @@ react-native-maps@0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.17.0.tgz#d10fa94a049432c46b6ee03fe9db84c83da65c8b"
 
-react-native-root-modal@^1.4.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-root-modal/-/react-native-root-modal-1.6.0.tgz#67bf6f23b61abc61cf58b245d1ef6822c209f262"
+react-native-root-modal@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-root-modal/-/react-native-root-modal-2.0.0.tgz#a33403ede9eb903b3929355e532461677b80f395"
   dependencies:
-    react-native-root-siblings "^1.3.0"
+    react-native-root-siblings "^2.0.0"
 
-react-native-root-siblings@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-1.3.0.tgz#46e40634a5ed84737965863b4dc551fa0e251c68"
+react-native-root-siblings@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-2.0.0.tgz#ac00884e69372ce43476458529a7b1777e8ac67f"
   dependencies:
     static-container "^1.0.0"
-
-react-native-root-siblings@brentvatne/react-native-root-siblings:
-  version "1.2.1"
-  resolved "https://codeload.github.com/brentvatne/react-native-root-siblings/tar.gz/7e0b69ca9acba624485c8d2d08ebde5e4ad2518a"
-  dependencies:
-    fbemitter "^2.1.1"
-    static-container "^1.0.0"
+    wolfy87-eventemitter "^5.2.2"
 
 react-native-safe-module@^1.1.0:
   version "1.2.0"
@@ -4697,6 +4691,10 @@ win-release@^1.0.0:
 window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
+
+wolfy87-eventemitter@^5.2.2:
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.3.tgz#e09979b4e7d8d5256e3a25e811529ba143115568"
 
 wordwrap@0.0.2:
   version "0.0.2"

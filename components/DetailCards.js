@@ -97,14 +97,16 @@ export class InstagramPhotosCard extends React.Component {
     let { profile } = this.props;
 
     if (profile) {
-      let response = await fetch(`https://www.instagram.com/${profile}/media/`);
+      let response = await fetch(`https://www.instagram.com/${profile}/?__a=1`);
       let data = await response.json();
+      let user = data.user;
+      let nodes = data.user.media.nodes;
       if (this._isMounted) {
-        let images = data.items.map(item => ({
-          imageUrl: item.images.standard_resolution.url,
-          width: item.images.standard_resolution.width,
-          height: item.images.standard_resolution.height,
-          description: item.caption && item.caption.text,
+        let images = nodes.map(node => ({
+          imageUrl: node.display_src,
+          width: node.dimensions.width,
+          height: node.dimensions.height,
+          description: node.caption,
         }));
         this.setState({ images: images.slice(0, 6) });
       }
