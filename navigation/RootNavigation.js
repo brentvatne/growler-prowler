@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+import { Header, StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import { capitalize } from 'lodash';
 
 import AuthenticationScreen from '../screens/AuthenticationScreen';
@@ -47,6 +47,12 @@ const SettingsStack = StackNavigator(
       },
       headerStyle: {
         backgroundColor: '#fff',
+        ...Platform.select({
+          android: {
+            paddingTop: Constants.statusBarHeight,
+            height: Header.HEIGHT + Constants.statusBarHeight,
+          },
+        }),
       },
     },
   }

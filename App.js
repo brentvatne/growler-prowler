@@ -1,4 +1,4 @@
-import Expo, { Font } from 'expo';
+import { AppLoading, Font } from 'expo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,13 +6,13 @@ import { Provider as ReduxProvider, connect } from 'react-redux';
 import { List } from 'immutable';
 
 import Actions from './state/Actions';
+import AllBreweries from './data';
 import AuthenticationScreen from './screens/AuthenticationScreen';
 import ImageGalleryPortal from './components/ImageGalleryPortal';
 import LocalStorage from './state/LocalStorage';
 import RootNavigation from './navigation/RootNavigation';
 import Store from './state/Store';
 import { Brewery, User } from './state/Records';
-import AllBreweries from './data';
 
 export default class AppContainer extends React.Component {
   render() {
@@ -63,7 +63,7 @@ class App extends React.Component {
   render() {
     if (!this.state.isReady) {
       return (
-        <Expo.AppLoading
+        <AppLoading
           startAsync={this._loadDataAndAssetsAsync}
           onError={e => console.error(e)}
           onFinish={() => {
