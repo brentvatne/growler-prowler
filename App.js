@@ -40,7 +40,7 @@ class App extends React.Component {
     return Font.loadAsync({
       ...Ionicons.font,
       'OpenSans-Light': require('./assets/fonts/OpenSans-Light.ttf'),
-      'OpenSans': require('./assets/fonts/OpenSans-Regular.ttf'),
+      OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
       'OpenSans-Bold': require('./assets/fonts/OpenSans-Semibold.ttf'),
     });
   };
@@ -78,7 +78,9 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
         {isSignedIn(this.props.currentUser) ? (
-          <RootNavigation persistenceKey={__DEV__ ? "nav-state" : null} />
+          <RootNavigation
+            persistenceKey={__DEV__ ? 'navigation-state' : null}
+          />
         ) : (
           <AuthenticationScreen />
         )}

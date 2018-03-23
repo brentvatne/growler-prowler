@@ -2,7 +2,11 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Header, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {
+  Header,
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
 import { capitalize } from 'lodash';
 
 import AuthenticationScreen from '../screens/AuthenticationScreen';
@@ -58,7 +62,7 @@ const SettingsStack = createStackNavigator(
   }
 );
 
-const TabLayout = createBottomTabNavigator(
+export default createBottomTabNavigator(
   {
     list: {
       screen: ListStack,
@@ -101,26 +105,12 @@ const TabLayout = createBottomTabNavigator(
               color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
             />
           );
-        }
+        },
       };
     },
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
-    },
-  }
-);
-
-export default createStackNavigator(
-  {
-    tabs: {
-      screen: TabLayout,
-    },
-  },
-  {
-    headerMode: 'none',
-    cardStyle: {
-      backgroundColor: '#fff',
     },
   }
 );
