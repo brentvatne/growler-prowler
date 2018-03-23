@@ -78,7 +78,7 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
         {isSignedIn(this.props.currentUser) ? (
-          <RootNavigation />
+          <RootNavigation persistenceKey={__DEV__ ? "nav-state" : null} />
         ) : (
           <AuthenticationScreen />
         )}

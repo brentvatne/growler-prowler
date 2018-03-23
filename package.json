@@ -3,7 +3,11 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "postinstall": "rm -rf node_modules/react-native-root-modal/node_modules"
+    "postinstall": "rm -rf node_modules/react-native-root-modal/node_modules",
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios"
   },
   "jest": {
     "preset": "jest-expo"
@@ -22,13 +26,14 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-native-fade-in-image": "^1.2.0",
     "react-native-root-modal": "^2.0.0",
-    "react-navigation": "1.0.0-rc.2",
+    "react-navigation": "2.0.0-beta.4",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",
     "time-js": "0.0.5"
   },
   "devDependencies": {
-    "jest-expo": "^25.1.0"
+    "jest-expo": "^25.1.0",
+    "react-native-scripts": "^1.11.1"
   }
 }

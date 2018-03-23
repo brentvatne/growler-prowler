@@ -99,14 +99,16 @@ export class InstagramPhotosCard extends React.Component {
     if (profile) {
       let response = await fetch(`https://www.instagram.com/${profile}/?__a=1`);
       let data = await response.json();
-      let user = data.user;
-      let nodes = data.user.media.nodes;
+      let user = data.graphql.user;
+      let nodes = user.edge_owner_to_timeline_media.edges;
       if (this._isMounted) {
-        let images = nodes.map(node => ({
-          imageUrl: node.display_src,
+        let images = nodes.map(({ node }) => ({
+          imageUrl: node.display_url,
           width: node.dimensions.width,
           height: node.dimensions.height,
-          description: node.caption,
+          description:
+            node.edge_media_to_caption.edges &&
+            node.edge_media_to_caption.edges[0].node.text,
         }));
         this.setState({ images: images.slice(0, 6) });
       }

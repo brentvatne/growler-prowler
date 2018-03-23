@@ -47,10 +47,15 @@ export default class BreweryList extends React.Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     this.props.setRef && this.props.setRef(this);
     setTimeout(() => {
-      this.setState({ renderContents: true });
+      this._isMounted && this.setState({ renderContents: true });
     }, 100);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   componentDidUpdate() {
