@@ -6,6 +6,7 @@ import {
   Header,
   createStackNavigator,
   createBottomTabNavigator,
+  createMaterialBottomTabNavigator,
 } from 'react-navigation';
 import { capitalize } from 'lodash';
 
@@ -62,7 +63,12 @@ const SettingsStack = createStackNavigator(
   }
 );
 
-export default createBottomTabNavigator(
+const createTabNavigator =
+  Platform.OS === 'ios'
+    ? createBottomTabNavigator
+    : createMaterialBottomTabNavigator;
+
+export default createTabNavigator(
   {
     list: {
       screen: ListStack,
@@ -100,14 +106,16 @@ export default createBottomTabNavigator(
           return (
             <Ionicons
               name={iconName}
-              size={Platform.OS === 'ios' ? 30 : 27}
-              style={{ marginBottom: -3 }}
+              size={30}
+              style={{ marginBottom: Platform.OS === 'ios' ? -3 : 0 }}
               color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
             />
           );
         },
       };
     },
+    activeTintColor: Colors.tabIconSelected,
+    inactiveTintColor: Colors.tabIconDefault,
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
