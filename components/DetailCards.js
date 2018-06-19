@@ -97,7 +97,14 @@ export class InstagramPhotosCard extends React.Component {
     let { profile } = this.props;
 
     if (profile) {
-      let response = await fetch(`https://www.instagram.com/${profile}/?__a=1`);
+      let response = await fetch(
+        `https://www.instagram.com/${profile}/?__a=1`,
+        {
+          headers: {
+            cookie: `mid=WtUR_QAEAAGk4IdXwVdyhx86qXMD; shbid=15618; rur=ATN; mid=WtUR_QAEAAGk4IdXwVdyhx86qXMD; mcd=3; csrftoken=vJGh3M3ksyFMUJOt7thF2dlpNV1ZCvwc; ds_user_id=8042417612; sessionid=IGSC57ebeb5264850321dccd4812afe32129482e5ea9126fa8260003669ddfaad00a%3Am3jtAJXI3zrVLCLl5clHO5MwH6ssGbiD%3A%7B%22_auth_user_id%22%3A8042417612%2C%22_auth_user_backend%22%3A%22accounts.backends.CaseInsensitiveModelBackend%22%2C%22_auth_user_hash%22%3A%22%22%2C%22_platform%22%3A4%2C%22_token_ver%22%3A2%2C%22_token%22%3A%228042417612%3AOcbgzFBPHOTsOkFyFETE0wx3oWXmFQ9L%3Acc007a13b2ac729b74365171ef6b69fff4dfa80247a1d96d765f43950d983248%22%2C%22last_refreshed%22%3A1529366705.2587640285%7D; urlgen="{\"time\": 1529299650}:1fV48z:8PlseiTQXSvCQ0arLxQpAgs2VEw`,
+          },
+        }
+      );
       let data = await response.json();
       let user = data.graphql.user;
       let nodes = user.edge_owner_to_timeline_media.edges;

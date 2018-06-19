@@ -17,23 +17,23 @@
     "@expo/react-native-read-more-text": "^1.0.0",
     "@expo/react-native-touchable-native-feedback-safe": "^1.0.0",
     "days": "^1.0.2",
-    "expo": "^25.0.0",
+    "expo": "^28.0.0",
     "fbemitter": "^2.1.1",
     "geolib": "^2.0.21",
     "immutable": "^3.8.1",
     "lodash": "^4.16.2",
-    "react": "16.0.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
     "react-native-fade-in-image": "^1.2.0",
     "react-native-root-modal": "^2.0.0",
-    "react-navigation": "2.0.0-beta.5",
+    "react-navigation": "2.3.1",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-effex": "^1.1.2",
     "time-js": "0.0.5"
   },
   "devDependencies": {
-    "jest-expo": "^25.1.0",
-    "react-native-scripts": "^1.11.1"
+    "jest-expo": "^28.0.0",
+    "react-native-scripts": "1.14.0"
   }
 }
