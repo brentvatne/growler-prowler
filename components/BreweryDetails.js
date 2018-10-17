@@ -13,6 +13,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Constants, LinearGradient } from 'expo';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import { withNavigation, Header, HeaderBackButton } from 'react-navigation';
+import { StackGestureContext } from 'react-navigation-stack';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 import { BoldText, RegularText } from './StyledText';
 import {
@@ -40,26 +42,32 @@ export default class BreweryDetails extends React.Component {
         <View style={{ flex: 1, marginTop: -50 }}>
           {this._renderHeroHeader()}
 
-          <Animated.ScrollView
-            scrollEventThrottle={16}
-            style={StyleSheet.absoluteFill}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-              { useNativeDriver: true }
-            )}>
-            <View style={styles.heroSpacer} />
+          <StackGestureContext.Consumer>
+            {ref => (
+              <NativeViewGestureHandler waitFor={ref}>
+                <Animated.ScrollView
+                  scrollEventThrottle={16}
+                  style={StyleSheet.absoluteFill}
+                  onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    { useNativeDriver: true }
+                  )}>
+                  <View style={styles.heroSpacer} />
 
-            <View style={styles.contentContainerStyle}>
-              <MapCard
-                brewery={brewery}
-                onPress={this._handlePressDirections}
-              />
-              <SummaryCard text={brewery.summary} />
-              <DescriptionCard text={brewery.description} />
-              <InstagramPhotosCard profile={brewery.instagram} />
-              <VisitedCard breweryId={this.props.brewery.id} />
-            </View>
-          </Animated.ScrollView>
+                  <View style={styles.contentContainerStyle}>
+                    <MapCard
+                      brewery={brewery}
+                      onPress={this._handlePressDirections}
+                    />
+                    <SummaryCard text={brewery.summary} />
+                    <DescriptionCard text={brewery.description} />
+                    {/* <InstagramPhotosCard profile={brewery.instagram} /> */}
+                    <VisitedCard breweryId={this.props.brewery.id} />
+                  </View>
+                </Animated.ScrollView>
+              </NativeViewGestureHandler>
+            )}
+          </StackGestureContext.Consumer>
         </View>
 
         {this._renderNavigationBarShadow()}

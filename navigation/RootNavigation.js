@@ -4,6 +4,7 @@ import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import {
   Header,
+  createAppContainer,
   createStackNavigator,
   createBottomTabNavigator,
   createMaterialBottomTabNavigator,
@@ -42,7 +43,7 @@ const SettingsStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: {
+    defaultNavigationOptions: {
       title: 'Settings',
       headerTitleStyle: {
         fontFamily: 'OpenSans-Bold',
@@ -68,7 +69,7 @@ const createTabNavigator =
     ? createBottomTabNavigator
     : createMaterialBottomTabNavigator;
 
-export default createTabNavigator(
+const RootNavigation = createTabNavigator(
   {
     list: {
       screen: ListStack,
@@ -81,7 +82,7 @@ export default createTabNavigator(
     },
   },
   {
-    navigationOptions: ({ navigation }) => {
+    defaultNavigationOptions: ({ navigation }) => {
       let { routeName } = navigation.state;
       let tabBarLabel = capitalize(routeName);
       if (tabBarLabel === 'List') {
@@ -122,3 +123,5 @@ export default createTabNavigator(
     },
   }
 );
+
+export default createAppContainer(RootNavigation);

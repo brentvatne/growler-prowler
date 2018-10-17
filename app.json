@@ -3,7 +3,7 @@
     "name": "Growler Prowler",
     "description": "Find breweries around you in Vancouver!",
     "slug": "growler-prowler",
-    "sdkVersion": "28.0.0",
+    "sdkVersion": "30.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "platforms": ["ios", "android"],

@@ -14,6 +14,9 @@ import RootNavigation from './navigation/RootNavigation';
 import Store from './state/Store';
 import { Brewery, User } from './state/Records';
 
+import { useScreens } from 'react-native-screens';
+useScreens();
+
 export default class AppContainer extends React.Component {
   render() {
     return (
