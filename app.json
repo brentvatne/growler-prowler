@@ -7,6 +7,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "platforms": ["ios", "android"],
+    "githubUrl":"https://github.com/brentvatne/growler-prowler",
     "primaryColor": "#f6bd94",
     "privacy": "unlisted",
     "icon": "./icon.png",
